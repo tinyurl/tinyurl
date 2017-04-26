@@ -2,14 +2,53 @@
     <head>
         <meta chatset='UTF-8'>
         <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+
+        <style>
+            .q-main {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-top: -20px;
+                margin-left: -300px;
+                width:600px;
+                height:40px;
+            }
+            .q-main h2 {
+                text-align: center;
+            }
+            .q-footer {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                padding: 1rem;
+                background-color: #efefef;
+                text-align: center;
+            }
+            .q-footer a {
+               text-decoration: none;
+            }
+        </style>
     </head>
 
     <body>
-        <div id="app">
-            <el-button @click="visible=true">Button</el-button>
-            <el-dialog v-model="visible" title="hello world">
-                <p>Wecolme use Element UI</p>
-            </el-dialog>
+        <div class="q-main">
+            <h2>TinyURL</h2>
+            <div id="app">
+                <el-row>
+                    <el-col :span="24">
+                        <el-input v-model="url" placeholder="input your url">
+                            <el-button slot="append" icon="search"></el-button>
+                        </el-input>
+                    </el-col>
+                </el-row>
+            </div>
+        </div>
+
+        <div class="q-footer">
+            &#169
+            <a href="https://github.com/adolphlwq/tinyurl" target="_blank">tinyUrl</a> developed by 
+            <a href="https://github.com/adolphlwq" target="_blank">adolphlwq</a>
         </div>
     </body>
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
@@ -17,8 +56,10 @@
     <script>
         new Vue({
             el: "#app",
-            data: function(){
-                return {visible: false}
+            data: {
+                form: {
+                    name: ''        
+                }
             }
         })
     </script>
