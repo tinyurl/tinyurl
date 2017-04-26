@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <meta chatset='UTF-8'>
+        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+    </head>
+
+    <body>
+        <div id="app">
+            <el-button @click="visible=true">Button</el-button>
+            <el-dialog v-model="visible" title="hello world">
+                <p>Wecolme use Element UI</p>
+            </el-dialog>
+        </div>
+    </body>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: function(){
+                return {visible: false}
+            }
+        })
+    </script>
+</html>
