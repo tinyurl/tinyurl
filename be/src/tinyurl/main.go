@@ -1,18 +1,18 @@
 package main
 
-import(
+import (
 	"flag"
 	"fmt"
 )
 
-var(
-	usi *UrlServiceImpl
-	dbname string
-	user string
-	pass string
+var (
+	usi     *UrlServiceImpl
+	dbname  string
+	user    string
+	pass    string
 	address string
-	dbport string
-	port string
+	dbport  string
+	port    string
 )
 
 func main() {
@@ -26,7 +26,6 @@ func main() {
 
 	fmt.Println("Start init DB")
 	dbs := NewDB(dbname, user, pass, address, dbport)
-	fmt.Println(dbs)
 	usi = NewUrlServiceImpl(dbs)
-	tinyUrlAPI(":"+port)	
+	tinyUrlAPI(":" + port)
 }

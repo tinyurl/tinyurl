@@ -1,11 +1,11 @@
 package main
 
-import(
+import (
 	"database/sql"
+	"fmt"
 	"log"
 	"sync"
 	"time"
-	"fmt"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -13,23 +13,23 @@ import(
 var onceSetupDB sync.Once
 
 type Url struct {
-	Id int
-	Longurl string
-	Shortpath string
+	Id          int
+	Longurl     string
+	Shortpath   string
 	CreatedTime time.Time
 }
 
 type DBService struct {
-	DBName	string
-	User	string
-	Pass	string
+	DBName  string
+	User    string
+	Pass    string
 	Address string
-	Port	string
-	DB		*sql.DB
+	Port    string
+	DB      *sql.DB
 }
 
 func NewDB(dbname, user, pass, address, port string) *DBService {
-	dbpath := user+":"+pass+"@tcp("+address+":"+port+")"+"/"+dbname
+	dbpath := user + ":" + pass + "@tcp(" + address + ":" + port + ")" + "/" + dbname
 	fmt.Println(dbpath)
 	db, err := sql.Open("mysql", dbpath)
 	if err != nil {
@@ -37,12 +37,12 @@ func NewDB(dbname, user, pass, address, port string) *DBService {
 	}
 
 	dbs := &DBService{
-		DBName: dbname,
-		User: user,
-		Pass: pass,
+		DBName:  dbname,
+		User:    user,
+		Pass:    pass,
 		Address: address,
-		Port: port,
-		DB: db,
+		Port:    port,
+		DB:      db,
 	}
 
 	fmt.Println("Start setup db ", dbs.DBName)
@@ -66,7 +66,7 @@ func (dbs *DBService) Setup() {
 		);
 	`
 	dbSchema := `
-		CREATE DATABASE IF NOT EXISTS `+dbs.DBName+` 
+		CREATE DATABASE IF NOT EXISTS ` + dbs.DBName + ` 
 			DEFAULT CHARACTER SET utf8
 			DEFAULT COLLATE utf8_general_ci;
 	`
@@ -85,6 +85,7 @@ func (dbs *DBService) Setup() {
 }
 
 // CheckLongurl check if longurl has existed
+// return false means longurl not exists in db
 func (dbs *DBService) CheckLongurl(longurl string) (string, bool) {
 	stmt, err := dbs.DB.Prepare("SELECT longurl, shortpath FROM url WHERE longurl=?")
 	defer stmt.Close()
@@ -95,44 +96,45 @@ func (dbs *DBService) CheckLongurl(longurl string) (string, bool) {
 	var longurl_, shortpath string
 	err = stmt.QueryRow(longurl).Scan(&longurl_, &shortpath)
 	if err != nil {
-		if err == sql.ErrNoRows{
+		if err == sql.ErrNoRows {
 			return "", false
-		}else{
+		} else {
 			log.Fatal("query longurl ", longurl, " error: ", err)
 		}
 	}
 
 	if len(shortpath) != 0 {
 		return shortpath, true
-	}else{
+	} else {
 		return "", false
 	}
 }
 
 // CheckPath check if shortpath has existed
+// return false means shortpath not extsts in db
 func (dbs *DBService) CheckPath(shortpath string) bool {
 	stmt, err := dbs.DB.Prepare("SELECT shortpath FROM url WHERE shortpath=?")
 	defer stmt.Close()
 	if err != nil {
 		log.Fatal("check shortpath ", shortpath, " err:", err)
 	}
-	
+
 	var ret string
 	err = stmt.QueryRow(shortpath).Scan(&ret)
 	if err != nil {
 		//refer http://go-database-sql.org/errors.html
-		if err == sql.ErrNoRows{
+		if err == sql.ErrNoRows {
 			return false
-		}else{
+		} else {
 			log.Fatal(err)
 		}
 	}
 
-	return len(ret) == 0
+	return len(ret) != 0
 }
 
 func (dbs *DBService) InsertShortpath(longurl, shortpath string) {
-	stmt, err := dbs.DB.Prepare("INSERT INTO url SET longurl=?,"+
+	stmt, err := dbs.DB.Prepare("INSERT INTO url SET longurl=?," +
 		"shortpath=?, created_time=?")
 	defer stmt.Close()
 	if err != nil {
@@ -150,7 +152,7 @@ func (dbs *DBService) InsertShortpath(longurl, shortpath string) {
 }
 
 func (dbs *DBService) QueryUrlRecord(shortpath string) string {
-	stmt, err := dbs.DB.Prepare("SELECT * FROM url WHERE shortpath=?")
+	stmt, err := dbs.DB.Prepare("SELECT id, longurl, shortpath FROM url WHERE shortpath=?")
 	defer stmt.Close()
 	if err != nil {
 		log.Fatal("query shortpath record error: ", err)
@@ -158,7 +160,7 @@ func (dbs *DBService) QueryUrlRecord(shortpath string) string {
 
 	row := stmt.QueryRow(shortpath)
 	var url Url
-	err = row.Scan(&url.Id, &url.Longurl, &url.Shortpath, &url.CreatedTime)
+	err = row.Scan(&url.Id, &url.Longurl, &url.Shortpath)
 	if err != nil {
 		log.Fatal(err)
 	}
