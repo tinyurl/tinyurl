@@ -38,7 +38,7 @@
                 <el-row>
                     <el-col :span="24">
                         <el-input v-model="url" placeholder="input your url">
-                            <el-button slot="append" icon="search"></el-button>
+                            <el-button slot="append" icon="information" type="danger" @click="shortenUrl()">Shorten</el-button>
                         </el-input>
                     </el-col>
                 </el-row>
@@ -52,15 +52,7 @@
         </div>
     </body>
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/vue.resource/1.3.1/vue-resource.min.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <script>
-        new Vue({
-            el: "#app",
-            data: {
-                form: {
-                    name: ''        
-                }
-            }
-        })
-    </script>
+    <script src="index.js"></script>
 </html>
