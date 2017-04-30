@@ -126,7 +126,7 @@ func (dbs *DBService) CheckPath(shortpath string) bool {
 		if err == sql.ErrNoRows {
 			return false
 		} else {
-			log.Fatal(err)
+			log.Fatal("check if shortpath exists error:", err)
 		}
 	}
 
@@ -147,7 +147,7 @@ func (dbs *DBService) InsertShortpath(longurl, shortpath string) {
 	}
 	_, err = res.RowsAffected()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("insert into url error: ", err)
 	}
 }
 
@@ -162,7 +162,8 @@ func (dbs *DBService) QueryUrlRecord(shortpath string) string {
 	var url Url
 	err = row.Scan(&url.Id, &url.Longurl, &url.Shortpath)
 	if err != nil {
-		log.Fatal(err)
+		log.Println("query url records error: ", err)
+		return ""
 	}
 
 	return url.Longurl

@@ -8,6 +8,12 @@
 			"branch": "master"
 		},
 		{
+			"importpath": "github.com/gin-contrib/cors",
+			"repository": "https://github.com/gin-contrib/cors",
+			"revision": "cf4846e6a636a76237a28d9286f163c132e841bc",
+			"branch": "master"
+		},
+		{
 			"importpath": "github.com/gin-gonic/gin",
 			"repository": "https://github.com/gin-gonic/gin",
 			"revision": "e2212d40c62a98b388a5eb48ecbdcf88534688ba",
