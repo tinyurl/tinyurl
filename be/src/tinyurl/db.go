@@ -3,10 +3,9 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"sync"
 	"time"
-
+	
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -33,7 +32,7 @@ func NewDB(dbname, user, pass, address, port string) *DBService {
 	fmt.Println(dbpath)
 	db, err := sql.Open("mysql", dbpath)
 	if err != nil {
-		log.Fatal("setup up db error:", err)
+		logq.Fatal("setup up db error:", err)
 	}
 
 	dbs := &DBService{
@@ -45,7 +44,7 @@ func NewDB(dbname, user, pass, address, port string) *DBService {
 		DB:      db,
 	}
 
-	fmt.Println("Start setup db ", dbs.DBName)
+	logq.Info("Start setup db ", dbs.DBName)
 	dbs.Setup()
 
 	return dbs
@@ -73,14 +72,14 @@ func (dbs *DBService) Setup() {
 	onceSetupDB.Do(func() {
 		_, err := dbs.DB.Exec(dbSchema)
 		if err != nil {
-			log.Fatal("setup database ", dbs.DBName, " err:", err)
+			logq.Fatal("setup database %s", dbs.DBName, " err:", err)
 		}
 		ret, err := dbs.DB.Exec(urlTable)
 		if err != nil {
-			log.Fatal("setup table error:", err)
+			logq.Fatal("setup table error:", err)
 		}
 
-		fmt.Println("setup db success with result:", ret)
+		logq.Info("setup db success with result:", ret)
 	})
 }
 
@@ -90,7 +89,7 @@ func (dbs *DBService) CheckLongurl(longurl string) (string, bool) {
 	stmt, err := dbs.DB.Prepare("SELECT longurl, shortpath FROM url WHERE longurl=?")
 	defer stmt.Close()
 	if err != nil {
-		log.Fatal("prepare longurl stmt error: ", err)
+		logq.Fatal("prepare longurl stmt error: ", err)
 	}
 
 	var longurl_, shortpath string
@@ -99,7 +98,7 @@ func (dbs *DBService) CheckLongurl(longurl string) (string, bool) {
 		if err == sql.ErrNoRows {
 			return "", false
 		} else {
-			log.Fatal("query longurl ", longurl, " error: ", err)
+			logq.Fatal("query longurl ", longurl, " error: ", err)
 		}
 	}
 
@@ -116,7 +115,7 @@ func (dbs *DBService) CheckPath(shortpath string) bool {
 	stmt, err := dbs.DB.Prepare("SELECT shortpath FROM url WHERE shortpath=?")
 	defer stmt.Close()
 	if err != nil {
-		log.Fatal("check shortpath ", shortpath, " err:", err)
+		logq.Fatal("check shortpath ", shortpath, " err:", err)
 	}
 
 	var ret string
@@ -126,7 +125,7 @@ func (dbs *DBService) CheckPath(shortpath string) bool {
 		if err == sql.ErrNoRows {
 			return false
 		} else {
-			log.Fatal("check if shortpath exists error:", err)
+			logq.Fatal("check if shortpath exists error:", err)
 		}
 	}
 
@@ -138,16 +137,16 @@ func (dbs *DBService) InsertShortpath(longurl, shortpath string) {
 		"shortpath=?, created_time=?")
 	defer stmt.Close()
 	if err != nil {
-		log.Fatal("Insert into database error: ", err)
+		logq.Fatal("Insert into database error: ", err)
 	}
 
 	res, err := stmt.Exec(longurl, shortpath, time.Now())
 	if err != nil {
-		log.Fatal(err)
+		logq.Fatal(err)
 	}
 	_, err = res.RowsAffected()
 	if err != nil {
-		log.Fatal("insert into url error: ", err)
+		logq.Fatal("insert into url error: ", err)
 	}
 }
 
@@ -155,14 +154,14 @@ func (dbs *DBService) QueryUrlRecord(shortpath string) string {
 	stmt, err := dbs.DB.Prepare("SELECT id, longurl, shortpath FROM url WHERE shortpath=?")
 	defer stmt.Close()
 	if err != nil {
-		log.Fatal("query shortpath record error: ", err)
+		logq.Fatal("query shortpath record error: ", err)
 	}
 
 	row := stmt.QueryRow(shortpath)
 	var url Url
 	err = row.Scan(&url.Id, &url.Longurl, &url.Shortpath)
 	if err != nil {
-		log.Println("query url records error: ", err)
+		logq.Warn("query url records error: ", err)
 		return ""
 	}
 

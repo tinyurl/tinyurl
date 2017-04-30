@@ -2,7 +2,8 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	"github.com/Sirupsen/logrus"
+	"os"
 )
 
 var (
@@ -15,6 +16,8 @@ var (
 	port    string
 )
 
+var logq *logrus.Logger
+
 func main() {
 	flag.StringVar(&dbname, "dbname", "tinyurl", "database name to connect")
 	flag.StringVar(&user, "user", "test", "user of database")
@@ -24,8 +27,16 @@ func main() {
 	flag.StringVar(&port, "port", "8877", "port tinyurl bind on")
 	flag.Parse()
 
-	fmt.Println("Start init DB")
+	logq.Info("Start init DB")
 	dbs := NewDB(dbname, user, pass, address, dbport)
 	usi = NewUrlServiceImpl(dbs)
 	tinyUrlAPI(":" + port)
+}
+
+func init() {
+	logrus.SetFormatter(&logrus.JSONFormatter{})
+	logrus.SetOutput(os.Stdout)
+	logrus.SetLevel(logrus.WarnLevel)
+
+	logq = logrus.New()
 }
