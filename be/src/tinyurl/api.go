@@ -12,7 +12,7 @@ import(
 func tinyUrlAPI(port string) {
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://api.adolphlwq.xyz"},
+		AllowOrigins: []string{"http://tinyurl.api.adolphlwq.xyz"},
 		AllowMethods: []string{"*"},
 		AllowHeaders:     []string{"Content-Type"},
 		ExposeHeaders:    []string{"Content-Length", "Access-Control-Allow-Origin", 
@@ -25,14 +25,14 @@ func tinyUrlAPI(port string) {
 		MaxAge: 12 * time.Hour,
 	}))
 
-	baseAPI := router.Group("/tinyurl/api/v1")
+	baseAPI := router.Group("/api/v1")
 	{
 		baseAPI.POST("/shorten", ShortenUrl)
 		baseAPI.PUT("/health", HealthCheck)
 	}
 
-	router.GET("/", ParseUrl)
-	router.GET("/:shortpath", ParseUrl)
+	//router.GET("/", ParseUrl)
+	router.GET("/n/:shortpath", ParseUrl)
 
 	router.Run(port)
 }
