@@ -1,4 +1,4 @@
-var apiUrl="http://localhost:8877"
+var apiUrl="http://api.adolphlwq.xyz/tinyurl"
 
 app = new Vue({
     el: "#app",
@@ -12,7 +12,6 @@ app = new Vue({
                 return
             }
             var postUrl = apiUrl+"/api/v1/shorten?longurl="+this.url
-            var self = this
             this.$http.post(postUrl).then(response=>{
                 ret = response.body
                 this.url="http://tinyurl.adolphlwq.xyz/"+ret["shortpath"]

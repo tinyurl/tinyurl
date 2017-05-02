@@ -12,12 +12,12 @@ import(
 func tinyUrlAPI(port string) {
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://localhost"+port},
-		AllowMethods: []string{"POST", "GET", "PUT"},
+		AllowOrigins: []string{"http://api.adolphlwq.xyz"},
+		AllowMethods: []string{"*"},
 		AllowHeaders:     []string{"Content-Type"},
-		ExposeHeaders:    []string{"Content-Length", "Content-Type"},
-		//ExposeHeaders:    []string{"Content-Length", "Access-Control-Allow-Origin", "Access-Control-Expose-Headers"},
-		AllowCredentials: true,
+		ExposeHeaders:    []string{"Content-Length", "Access-Control-Allow-Origin", 
+			"Access-Control-Allow-Headers", "Access-Control-Allow-Methods"},
+		//AllowCredentials: true,
 		AllowOriginFunc: func(origin string) bool {
 			fmt.Println(origin)
 			return true
@@ -25,7 +25,7 @@ func tinyUrlAPI(port string) {
 		MaxAge: 12 * time.Hour,
 	}))
 
-	baseAPI := router.Group("/api/v1")
+	baseAPI := router.Group("/tinyurl/api/v1")
 	{
 		baseAPI.POST("/shorten", ShortenUrl)
 		baseAPI.PUT("/health", HealthCheck)
@@ -42,10 +42,6 @@ func ShortenUrl(c *gin.Context) {
 	// check longurl
 	logq.Info("check if longurl:", longurl, " has existed in db.")
 	shortpath, exists := usi.dbs.CheckLongurl(longurl)
-	c.Header("Access-Control-Expose-Headers", "*")
-	c.Header("Access-Control-Allow-Headers", "Content-Type")
-	c.Header("Access-Control-Allow-Origin", "*")
-	c.Header("Content-Type", "application/json; charset=utf-8")
 	if exists {
 		logq.Info(longurl, " has been existed, return shortpath directly.")
 		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "shortpath": shortpath})
