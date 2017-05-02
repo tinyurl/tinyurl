@@ -28,7 +28,7 @@ type DBService struct {
 }
 
 func NewDB(dbname, user, pass, address, port string) *DBService {
-	dbpath := user + ":" + pass + "@tcp(" + address + ":" + port + ")" + "/" + dbname
+	dbpath := user + ":" + pass + "@tcp(" + address + ":" + port + ")/"
 	fmt.Println(dbpath)
 	db, err := sql.Open("mysql", dbpath)
 	if err != nil {
@@ -46,7 +46,6 @@ func NewDB(dbname, user, pass, address, port string) *DBService {
 
 	logq.Info("Start setup db ", dbs.DBName)
 	dbs.Setup()
-
 	return dbs
 }
 
@@ -69,17 +68,20 @@ func (dbs *DBService) Setup() {
 			DEFAULT CHARACTER SET utf8
 			DEFAULT COLLATE utf8_general_ci;
 	`
+	useDB := "USE " +dbs.DBName + ";"
+
 	onceSetupDB.Do(func() {
-		_, err := dbs.DB.Exec(dbSchema)
-		if err != nil {
-			logq.Fatal("setup database %s", dbs.DBName, " err:", err)
+		if _, err := dbs.DB.Exec(dbSchema); err != nil {
+			logq.Fatal("setup database ", dbs.DBName, " err:", err)
 		}
-		ret, err := dbs.DB.Exec(urlTable)
-		if err != nil {
-			logq.Fatal("setup table error:", err)
+		
+		if _, err := dbs.DB.Exec(useDB); err != nil {
+			logq.Fatal("use db ", dbs.DBName, " error:", err)
 		}
 
-		logq.Info("setup db success with result:", ret)
+		if _, err := dbs.DB.Exec(urlTable); err != nil {
+			logq.Fatal("setup table error:", err)
+		}
 	})
 }
 
