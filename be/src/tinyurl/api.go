@@ -39,6 +39,10 @@ func tinyUrlAPI(port string) {
 
 func ShortenUrl(c *gin.Context) {
 	longurl := c.PostForm("longurl")
+	
+	if longurl == nil || len(longurl) == 0 {
+		c.JSON(http.StatusOK, gin.H{"shortpath": "This is OPITIONS preflight request, please try again."})
+	}
 	// check longurl
 	logq.Info("check if longurl:", longurl, " has existed in db.")
 	shortpath, exists := usi.dbs.CheckLongurl(longurl)
