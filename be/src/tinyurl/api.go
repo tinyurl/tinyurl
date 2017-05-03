@@ -38,7 +38,7 @@ func tinyUrlAPI(port string) {
 }
 
 func ShortenUrl(c *gin.Context) {
-	longurl := c.Query("longurl")
+	longurl := c.PostForm("longurl")
 	// check longurl
 	logq.Info("check if longurl:", longurl, " has existed in db.")
 	shortpath, exists := usi.dbs.CheckLongurl(longurl)
