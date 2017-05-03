@@ -57,7 +57,7 @@ func (dbs *DBService) Setup() {
 	urlTable := `
 		CREATE TABLE IF NOT EXISTS ` + dbs.DBName + `.url (
 			id INT(10) NOT NULL AUTO_INCREMENT,
-			longurl VARCHAR(128) NOT NULL,
+			longurl VARCHAR(21800) NOT NULL,
 			shortpath VARCHAR(32) NOT NULL,
 			created_time DATE NOT NULL,
 			PRIMARY KEY (id)
