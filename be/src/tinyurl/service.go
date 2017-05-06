@@ -15,7 +15,7 @@ type UrlServiceImpl struct {
 }
 
 func NewUrlServiceImpl(dbs *DBService) *UrlServiceImpl {
-	usi := &UrlServiceImpl{dbs: dbs,}
+	usi := &UrlServiceImpl{dbs: dbs, length: DEFAULTLEN,}
 	return usi
 }
 

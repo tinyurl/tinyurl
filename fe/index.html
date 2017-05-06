@@ -49,6 +49,7 @@
                 <el-row>
                     <el-col :span="24">
                         <el-input v-model="url" size="large" placeholder="input your url">
+                            <p>{{url}}</p>
                             <el-button slot="append" icon="information" type="primary" @click="shortenUrl()">Shorten</el-button>
                         </el-input>
                     </el-col>

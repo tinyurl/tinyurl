@@ -8,20 +8,21 @@ app = new Vue({
     },
     methods: {
         shortenUrl: function() {
-            if (this.url == "") {
+            self = this
+            if (self.url == "") {
                 alert("please input correct url")
                 return
             }
-            var postUrl = apiUrl+"/api/v1/shorten"
-            var shortpath
 
-            axios.post(postUrl, {
-                "longurl": this.url
-            })
+            var postUrl = apiUrl+"/api/v1/shorten"
+            config = { headers: { 'Content-Type': 'multipart/form-data'}}
+            formData = new FormData()
+            formData.append('longurl', self.url)
+            
+            axios.post(postUrl, formData, config)
             .then(function(response) {
-                //this.url="http://tinyurl.adolphlwq.xyz/n/"+shortpath
-                console.log(response)
-                this.url='sb'
+                data = response.data
+                self.url="http://tinyurl.adolphlwq.xyz/n/"+data["shortpath"]
             })
             .catch(function(error) {
                 alert(error)
