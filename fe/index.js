@@ -13,13 +13,18 @@ app = new Vue({
                 return
             }
             var postUrl = apiUrl+"/api/v1/shorten"
-            formData = new FormData()
-            formData.append('longurl', this.url)
-            this.$http.post(postUrl, formData).then(response=>{
-                ret = response.body
-                this.url="http://tinyurl.adolphlwq.xyz/n/"+ret["shortpath"]
-            }, response=>{
-                alert("shorten url error")
+            var shortpath
+
+            axios.post(postUrl, {
+                "longurl": this.url
+            })
+            .then(function(response) {
+                //this.url="http://tinyurl.adolphlwq.xyz/n/"+shortpath
+                console.log(response)
+                this.url='sb'
+            })
+            .catch(function(error) {
+                alert(error)
             })
         }
     }
