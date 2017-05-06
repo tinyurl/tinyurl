@@ -1,7 +1,6 @@
 package main
 
 import(
-	"fmt"
 	"net/http"
 	"time"
 
@@ -19,7 +18,7 @@ func tinyUrlAPI(port string) {
 			"Access-Control-Allow-Headers", "Access-Control-Allow-Methods"},
 		//AllowCredentials: true,
 		AllowOriginFunc: func(origin string) bool {
-			fmt.Println(origin)
+			logq.Info("origin is ", origin)
 			return true
 		},
 		MaxAge: 12 * time.Hour,
@@ -52,7 +51,7 @@ func ShortenUrl(c *gin.Context) {
 	} else {
 		shortpath := usi.Shorten(longurl, 4)
 		logq.Info("generate shortpath: ", shortpath, " for longurl: ", longurl)
-		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "shorpath": shortpath})
+		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "shortpath": shortpath})
 	}
 }
 
