@@ -31,3 +31,7 @@ browse [tinyUrl demo website](http://tinyurl.adolphlwq.xyz) and enjoy yourself.
 - [ ] validate input url format
 - [ ] improve random generate string algorithm
 - [ ] reserch [wrk](https://github.com/wg/wrk)
+- [ ] use logrus replace golang log lib
+- [ ] add test case
+- [ ] dynamic adjust short path length (default is 4)
+- [ ] count each url parse time (high concurrent situation)
