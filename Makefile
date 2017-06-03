@@ -1,13 +1,12 @@
 GO=$(shell which go)
 
 test:
-	echo "test"
-	echo $(GO)
+	$(GO) test
+benchmark:
+	$(GO) test -test.bench=".*"
 fe-dev:
 	http-server fe
 compile:
 	CGO_ENABLED=0 GOOS=linux $(GO) build -a -installsuffix cgo -o tinyurl
-benchmark:
-	$(GO) test -test.bench=".*"
 clean:
 	rm tinyurl

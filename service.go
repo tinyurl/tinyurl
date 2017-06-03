@@ -1,29 +1,33 @@
 package main
 
-import(
+import (
 	"math/rand"
 )
 
-const(
-	VALIDECHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-	DEFAULTLEN = 4
+const (
+	// ValidChars chars to consists of random string
+	ValidChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+	// DefaultLen default random string length
+	DefaultLen = 4
 )
 
-type UrlServiceImpl struct {
-	dbs 	*DBService
+// URLServiceImpl main service of shortpath
+type URLServiceImpl struct {
+	dbs    *DBService
 	length int
 }
 
-func NewUrlServiceImpl(dbs *DBService) *UrlServiceImpl {
-	usi := &UrlServiceImpl{dbs: dbs, length: DEFAULTLEN,}
+// NewURLServiceImpl return new UrlServiceImpl instance
+func NewURLServiceImpl(dbs *DBService) *URLServiceImpl {
+	usi := &URLServiceImpl{dbs: dbs, length: DefaultLen}
 	return usi
 }
 
 // Shorten generate a short, non-repeat path maps to longurl
-func (u *UrlServiceImpl) Shorten(longurl string, length int) string {
-	if length == 0{
-		u.SetLen(DEFAULTLEN)
-	}else{
+func (u *URLServiceImpl) Shorten(longurl string, length int) string {
+	if length == 0 {
+		u.SetLen(DefaultLen)
+	} else {
 		u.SetLen(length)
 	}
 
@@ -36,33 +40,46 @@ func (u *UrlServiceImpl) Shorten(longurl string, length int) string {
 	return shortpath
 }
 
-func (u *UrlServiceImpl) Put(longurl, shortpath string) {
+// Put save url and shortpath to db
+func (u *URLServiceImpl) Put(longurl, shortpath string) {
 	u.dbs.InsertShortpath(longurl, shortpath)
 }
 
-func (u *UrlServiceImpl) GetShortpath(shortpath string) string {
+// GetShortpath get shortpath and url by shortpath from db
+func (u *URLServiceImpl) GetShortpath(shortpath string) string {
 	return u.dbs.QueryUrlRecord(shortpath)
 }
 
-func (u *UrlServiceImpl) SetLen(length int) {
+// SetLen set current random string length
+func (u *URLServiceImpl) SetLen(length int) {
 	u.length = length
 }
 
-func (u *UrlServiceImpl) GetLen() int {
+// GetLen return current random string length
+func (u *URLServiceImpl) GetLen() int {
 	return u.length
 }
 
-func generateRandomStr(length int) string {
-	var shortUrl []byte 
-	for i:=0; i<length; i++ {
-		randnum := rand.Intn(len(VALIDECHARS))
-		shortUrl = append(shortUrl, VALIDECHARS[randnum])
-	}
-
-	return string(shortUrl)
+// Seek check if path has existed in db
+func (u *URLServiceImpl) Seek(path string) bool {
+	return u.dbs.CheckPath(path)
 }
 
-// seek check if path has existed in db
-func (u *UrlServiceImpl) Seek(path string) bool {
-	return u.dbs.CheckPath(path)	
+// generateRandomStr
+func generateRandomStr(length int) string {
+	shortURL := make([]byte, length)
+	seed := make([]byte, length)
+	charLength := len(ValidChars)
+
+	_, err := rand.Read(seed)
+	if err != nil {
+		logq.Fatal(err)
+	}
+
+	for k, v := range seed {
+		i := int(v)
+		shortURL[k] = ValidChars[i%charLength]
+	}
+
+	return string(shortURL)
 }

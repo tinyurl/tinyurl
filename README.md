@@ -26,6 +26,7 @@ browse [tinyUrl demo website](http://tinyurl.adolphlwq.xyz) and enjoy yourself.
 ## TODOs
 - [X] validate input url format
 - [ ] improve random generate string algorithm
+    - [X] use math/rand.Read instead math/rand.Intn func
 - [ ] reserch [wrk](https://github.com/wg/wrk)
 - [ ] use logrus replace golang log lib
 - [ ] add test case

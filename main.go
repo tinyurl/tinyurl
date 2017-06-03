@@ -2,12 +2,13 @@ package main
 
 import (
 	"flag"
-	"github.com/Sirupsen/logrus"
 	"os"
+
+	"github.com/Sirupsen/logrus"
 )
 
 var (
-	usi     *UrlServiceImpl
+	usi     *URLServiceImpl
 	dbname  string
 	user    string
 	pass    string
@@ -29,7 +30,7 @@ func main() {
 
 	logq.Info("Start init DB")
 	dbs := NewDB(dbname, user, pass, address, dbport)
-	usi = NewUrlServiceImpl(dbs)
+	usi = NewURLServiceImpl(dbs)
 	tinyUrlAPI(":" + port)
 }
 
