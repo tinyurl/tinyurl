@@ -7,28 +7,24 @@ browse [tinyUrl demo website](http://tinyurl.adolphlwq.xyz) and enjoy yourself.
 
 ## Directory structure
 ```
+➜  tinyurl git:(master) ✗ tree
 .
-├── be
-│   ├── bin
-│   │   └── tinyurl
-│   ├── Makefile
-│   ├── pkg
-│   │   └── linux-amd64
-│   ├── src
-│   │   └── tinyurl
-│   └── vendor
-│       ├── manifest
-│       └── src
+├── api.go
+├── db.go
 ├── fe
 │   ├── index.html
 │   └── index.js
-└── README.md
+├── main.go
+├── Makefile
+├── README.md
+├── service.go
+└── service_test.go
 ```
-- `be` is the backend directory,it contains the Golang backend project.I use [gb](https://github.com/constabulary/gb) to manage Golang project.
-- `fe` is the front end directory,it contains web pages and extra files needed.
+
+`fe` is the front end directory,it contains web pages and extra files needed.
 
 ## TODOs
-- [ ] validate input url format
+- [X] validate input url format
 - [ ] improve random generate string algorithm
 - [ ] reserch [wrk](https://github.com/wg/wrk)
 - [ ] use logrus replace golang log lib
