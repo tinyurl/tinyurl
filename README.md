@@ -25,10 +25,11 @@ browse [tinyUrl demo website](http://tinyurl.adolphlwq.xyz) and enjoy yourself.
 
 ## TODOs
 - [X] validate input url format
-- [ ] improve random generate string algorithm
+- [X] improve random generate string algorithm
     - [X] use math/rand.Read instead math/rand.Intn func
-- [ ] reserch [wrk](https://github.com/wg/wrk)
 - [X] use logrus replace golang log lib
+- [ ] reserch [wrk](https://github.com/wg/wrk)
+- [ ] add QR code support
 - [ ] add test case
 - [ ] dynamic adjust short path length (default is 4)
 - [ ] count each url parse time (high concurrent situation)
