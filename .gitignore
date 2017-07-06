@@ -1,2 +1,2 @@
-be/pkg
-be/bin
+vendor/*
+!vendor/vendor.json
