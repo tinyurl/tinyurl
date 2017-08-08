@@ -33,3 +33,8 @@ browse [tinyUrl demo website](http://tinyurl.adolphlwq.xyz) and enjoy yourself.
 - [ ] add test case
 - [ ] dynamic adjust short path length (default is 4)
 - [ ] count each url parse time (high concurrent situation)
+- [ ] qrcode support
+- [ ] list api
+
+## Reference
+- [GitHub/Ourls](https://github.com/takashiki/Ourls)
