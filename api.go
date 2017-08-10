@@ -1,9 +1,10 @@
 package main
 
-import(
+import (
 	"net/http"
 	"time"
 
+	"github.com/Sirupsen/logrus"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -13,12 +14,12 @@ func tinyUrlAPI(port string) {
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{"http://tinyurl.api.adolphlwq.xyz"},
 		AllowMethods: []string{"*"},
-		AllowHeaders:     []string{"Content-Type"},
-		ExposeHeaders:    []string{"Content-Length", "Access-Control-Allow-Origin", 
+		AllowHeaders: []string{"Content-Type"},
+		ExposeHeaders: []string{"Content-Length", "Access-Control-Allow-Origin",
 			"Access-Control-Allow-Headers", "Access-Control-Allow-Methods"},
 		//AllowCredentials: true,
 		AllowOriginFunc: func(origin string) bool {
-			logq.Info("origin is ", origin)
+			logrus.Info("origin is ", origin)
 			return true
 		},
 		MaxAge: 12 * time.Hour,
@@ -38,19 +39,19 @@ func tinyUrlAPI(port string) {
 
 func ShortenUrl(c *gin.Context) {
 	longurl := c.PostForm("longurl")
-	
+
 	if len(longurl) == 0 {
 		c.JSON(http.StatusOK, gin.H{"shortpath": "This is OPITIONS preflight request, please try again."})
 	}
 	// check longurl
-	logq.Info("check if longurl:", longurl, " has existed in db.")
+	logrus.Info("check if longurl:", longurl, " has existed in db.")
 	shortpath, exists := usi.dbs.CheckLongurl(longurl)
 	if exists {
-		logq.Info(longurl, " has been existed, return shortpath directly.")
+		logrus.Info(longurl, " has been existed, return shortpath directly.")
 		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "shortpath": shortpath})
 	} else {
 		shortpath := usi.Shorten(longurl, 4)
-		logq.Info("generate shortpath: ", shortpath, " for longurl: ", longurl)
+		logrus.Info("generate shortpath: ", shortpath, " for longurl: ", longurl)
 		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "shortpath": shortpath})
 	}
 }
@@ -58,15 +59,15 @@ func ShortenUrl(c *gin.Context) {
 // ParseUrl parse shorten path and return source url
 func ParseUrl(c *gin.Context) {
 	shortpath := c.Param("shortpath")
-	logq.Info("parse shortpath: ", shortpath, " for longurl")
+	logrus.Info("parse shortpath: ", shortpath, " for longurl")
 	if len(shortpath) == 0 {
-		logq.Warn("shortpath is nil, return default home path.")
+		logrus.Warn("shortpath is nil, return default home path.")
 		c.Redirect(http.StatusMovedPermanently, "http://tinyurl.adolphlwq.xyz")
 	}
 
 	longurl := usi.dbs.QueryUrlRecord(shortpath)
 	if len(longurl) == 0 {
-		logq.Warn("longurl of shortpath is nil, return default home page.")
+		logrus.Warn("longurl of shortpath is nil, return default home page.")
 		c.Redirect(http.StatusMovedPermanently, "http://tinyurl.adolphlwq.xyz")
 	}
 
