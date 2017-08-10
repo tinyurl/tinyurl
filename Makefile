@@ -3,6 +3,8 @@ PKGS=$(shell go list ./... | grep -E -v "(vendor)")
 
 all:
 	go build $(GO_BUILD_FLAGS) -o tinyurl
+dev:
+	./tinyurl -dbname tinyurl -user root -pass root -dbport 3306
 test:
 	go test --cover $(PKGS)
 benchmark:
