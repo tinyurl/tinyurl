@@ -5,23 +5,29 @@ a url shorten web service written by Golang, Vue and Gin.
 ## Demo
 browse [tinyUrl demo website](http://tinyurl.adolphlwq.xyz) and enjoy yourself.
 
-## Directory structure
-```
-➜  tinyurl git:(master) ✗ tree
-.
-├── api.go
-├── db.go
-├── fe
-│   ├── index.html
-│   └── index.js
-├── main.go
-├── Makefile
-├── README.md
-├── service.go
-└── service_test.go
-```
+## Requisites
+- Golang(1.8+)
+- [Govendor](https://github.com/kardianos/govendor)
+- MySQL
+- make
 
-`fe` is the front end directory,it contains web pages and extra files needed.
+## Quick Start
+1. clone project to **GOPATH**
+```
+git clone https://github.com/adolphlwq/tinyurl.git $GOPATH/src/tinyurl
+```
+2. sync golang packages
+```
+govendor sync
+```
+3. build binary
+```
+make
+```
+4. run binary
+```
+./tinyurl -dbname tinyurl -user user -pass pass -dbport 2306
+```
 
 ## TODOs
 - [X] validate input url format
