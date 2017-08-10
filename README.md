@@ -1,6 +1,6 @@
 # TinyUrl
 
-a url shorten web service written by Golang,Vue and Gin.
+a url shorten web service written by Golang, Vue and Gin.
 
 ## Demo
 browse [tinyUrl demo website](http://tinyurl.adolphlwq.xyz) and enjoy yourself.
