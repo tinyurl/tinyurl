@@ -5,6 +5,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/Sirupsen/logrus"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -29,7 +30,7 @@ type DBService struct {
 // NewDB return DBService
 func NewDB(dbname, user, pass, address, port string) *DBService {
 	dbpath := user + ":" + pass + "@tcp(" + address + ":" + port + ")/"
-	logq.Info("dbpath is ", dbpath)
+	logrus.Info("dbpath is ", dbpath)
 
 	dbs := &DBService{
 		DBName:  dbname,
@@ -49,9 +50,9 @@ func NewDB(dbname, user, pass, address, port string) *DBService {
 func (dbs *DBService) CreateBareDB() *sql.DB {
 	db, err := sql.Open("mysql", dbs.DBPath)
 	if err != nil {
-		logq.Fatal("setup up db error:", err)
+		logrus.Fatal("setup up db error:", err)
 	}
-	logq.Info("create db.")
+	logrus.Info("create db.")
 
 	return db
 }
@@ -60,9 +61,9 @@ func (dbs *DBService) CreateBareDB() *sql.DB {
 func (dbs *DBService) CreateDB() *sql.DB {
 	db, err := sql.Open("mysql", dbs.DBPath+dbs.DBName)
 	if err != nil {
-		logq.Fatal("setup up db error:", err)
+		logrus.Fatal("setup up db error:", err)
 	}
-	logq.Info("create db.")
+	logrus.Info("create db.")
 
 	return db
 }
@@ -89,19 +90,19 @@ func (dbs *DBService) Setup() {
 	useDB := "USE " + dbs.DBName + ";"
 
 	onceSetupDB.Do(func() {
-		logq.Info("start create db %s if not exists.", dbs.DBName)
+		logrus.Info("start create db %s if not exists.", dbs.DBName)
 		if _, err := db.Exec(dbSchema); err != nil {
-			logq.Fatal("setup database ", dbs.DBName, " err:", err)
+			logrus.Fatal("setup database ", dbs.DBName, " err:", err)
 		}
 
-		logq.Info("start use db ", dbs.DBName)
+		logrus.Info("start use db ", dbs.DBName)
 		if _, err := db.Exec(useDB); err != nil {
-			logq.Fatal("use db ", dbs.DBName, " error:", err)
+			logrus.Fatal("use db ", dbs.DBName, " error:", err)
 		}
 
-		logq.Info("start create table url if not exists.")
+		logrus.Info("start create table url if not exists.")
 		if _, err := db.Exec(urlTable); err != nil {
-			logq.Fatal("setup table error:", err)
+			logrus.Fatal("setup table error:", err)
 		}
 	})
 }
@@ -115,7 +116,7 @@ func (dbs *DBService) CheckLongurl(longurl string) (string, bool) {
 	stmt, err := db.Prepare("SELECT longurl, shortpath FROM url WHERE longurl=?")
 	defer stmt.Close()
 	if err != nil {
-		logq.Fatal("prepare longurl stmt error: ", err)
+		logrus.Fatal("prepare longurl stmt error: ", err)
 	}
 
 	var longurl_, shortpath string
@@ -124,7 +125,7 @@ func (dbs *DBService) CheckLongurl(longurl string) (string, bool) {
 		if err == sql.ErrNoRows {
 			return "", false
 		} else {
-			logq.Fatal("query longurl ", longurl, " error: ", err)
+			logrus.Fatal("query longurl ", longurl, " error: ", err)
 		}
 	}
 
@@ -144,7 +145,7 @@ func (dbs *DBService) CheckPath(shortpath string) bool {
 	stmt, err := db.Prepare("SELECT shortpath FROM url WHERE shortpath=?")
 	defer stmt.Close()
 	if err != nil {
-		logq.Fatal("check shortpath ", shortpath, " err:", err)
+		logrus.Fatal("check shortpath ", shortpath, " err:", err)
 	}
 
 	var ret string
@@ -154,7 +155,7 @@ func (dbs *DBService) CheckPath(shortpath string) bool {
 		if err == sql.ErrNoRows {
 			return false
 		} else {
-			logq.Fatal("check if shortpath exists error:", err)
+			logrus.Fatal("check if shortpath exists error:", err)
 		}
 	}
 
@@ -170,16 +171,16 @@ func (dbs *DBService) InsertShortpath(longurl, shortpath string) {
 		"shortpath=?, created_time=?")
 	defer stmt.Close()
 	if err != nil {
-		logq.Fatal("Insert into database error: ", err)
+		logrus.Fatal("Insert into database error: ", err)
 	}
 
 	res, err := stmt.Exec(longurl, shortpath, time.Now())
 	if err != nil {
-		logq.Fatal(err)
+		logrus.Fatal(err)
 	}
 	_, err = res.RowsAffected()
 	if err != nil {
-		logq.Fatal("insert into url error: ", err)
+		logrus.Fatal("insert into url error: ", err)
 	}
 }
 
@@ -191,14 +192,14 @@ func (dbs *DBService) QueryUrlRecord(shortpath string) string {
 	stmt, err := db.Prepare("SELECT id, longurl, shortpath FROM url WHERE shortpath=?")
 	defer stmt.Close()
 	if err != nil {
-		logq.Fatal("query shortpath record error: ", err)
+		logrus.Fatal("query shortpath record error: ", err)
 	}
 
 	row := stmt.QueryRow(shortpath)
 	var url Url
 	err = row.Scan(&url.Id, &url.Longurl, &url.Shortpath)
 	if err != nil {
-		logq.Warn("query url records error: ", err)
+		logrus.Warn("query url records error: ", err)
 		return ""
 	}
 
