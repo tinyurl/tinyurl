@@ -1,14 +1,15 @@
-GO=$(shell which go)
-WRK=$(shell which wrk)
+GO_BUILD_FLAGS=
+PKGS=$(shell go list ./... | grep -E -v "(vendor)")
+
+all:
+	go build $(GO_BUILD_FLAGS) -o tinyurl
 test:
-	$(GO) test
+	go test --cover $(PKGS)
 benchmark:
-	$(GO) test -test.bench=".*"
+	go test -test.bench=".*"
 fe-dev:
-	http-server fe -p 8080
+	http-server frontend -p 8080
 http-bm-fe:
-	$(WRK) -t10 -c100 -d20s http://localhost:8080/
-compile:
-	CGO_ENABLED=0 GOOS=linux $(GO) build -a -installsuffix cgo -o tinyurl
+	wrk -t10 -c100 -d20s http://localhost:8080/
 clean:
-	rm tinyurl
+	rm -f tinyurl
