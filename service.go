@@ -2,6 +2,8 @@ package main
 
 import (
 	"math/rand"
+
+	"github.com/Sirupsen/logrus"
 )
 
 const (
@@ -73,7 +75,7 @@ func generateRandomStr(length int) string {
 
 	_, err := rand.Read(seed)
 	if err != nil {
-		logq.Fatal(err)
+		logrus.Fatal(err)
 	}
 
 	for k, v := range seed {
