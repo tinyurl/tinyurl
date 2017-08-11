@@ -12,7 +12,6 @@ import (
 func tinyUrlAPI(port string) {
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://tinyurl.api.adolphlwq.xyz"},
 		AllowMethods: []string{"GET", "POST"},
 		AllowHeaders: []string{"Content-Type"},
 		ExposeHeaders: []string{"Content-Length", "Access-Control-Allow-Origin",
