@@ -1,5 +1,7 @@
 # TinyUrl
 
+[![Build Status](https://travis-ci.org/adolphlwq/tinyurl.svg?branch=0.1-dev)](https://travis-ci.org/adolphlwq/tinyurl)
+
 a url shorten web service written by Golang, Vue and Gin.
 
 ## Demo
