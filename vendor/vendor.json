@@ -3,10 +3,20 @@
 	"ignore": "test",
 	"package": [
 		{
+			"path": "appengine/cloudsql",
+			"revision": ""
+		},
+		{
 			"checksumSHA1": "nyO7DwRgPMIdpMKseDeL9hlUQVg=",
 			"path": "github.com/Sirupsen/logrus",
 			"revision": "59d0ca41e5faad81cac03f7a7d84ba80d9cc9673",
 			"revisionTime": "2017-07-06T13:44:07Z"
+		},
+		{
+			"checksumSHA1": "XeZ0s/EYoIORsoatbSOJQzIDLgU=",
+			"path": "github.com/gin-contrib/cors",
+			"revision": "567de191692713543513692ecba9f6ca08cd660a",
+			"revisionTime": "2017-07-08T08:09:47Z"
 		},
 		{
 			"checksumSHA1": "QeKwBtN2df+j+4stw3bQJ6yO4EY=",
@@ -31,6 +41,12 @@
 			"path": "github.com/gin-gonic/gin/render",
 			"revision": "e0fd6238d3cb237d3eb4c3d13792caa265ecdf29",
 			"revisionTime": "2017-07-06T14:49:54Z"
+		},
+		{
+			"checksumSHA1": "i3UtE7/Cn57eX1hO5Z0CqY/Eeb4=",
+			"path": "github.com/go-sql-driver/mysql",
+			"revision": "3955978caca48c1658a4bb7a9c6a0f084e326af3",
+			"revisionTime": "2017-07-15T19:24:08Z"
 		},
 		{
 			"checksumSHA1": "qlPUeFabwF4RKAOF1H+yBFU1Veg=",
