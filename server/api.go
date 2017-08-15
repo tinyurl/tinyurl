@@ -9,7 +9,7 @@ import (
 )
 
 // Start start server
-func Start(addr string, sp *ServiceProvider) {
+func Start(addr string, appService *ServiceProvider) {
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
 		AllowMethods: []string{"GET", "POST"},
@@ -24,17 +24,17 @@ func Start(addr string, sp *ServiceProvider) {
 		MaxAge: 12 * time.Hour,
 	}))
 
-	router.GET("/n/:shortpath", WrapeService(sp, ParseURL))
+	router.GET("/n/:shortpath", WrapeService(appService, ParseURL))
 	router.GET("/health", HealthCheck)
-	router.POST("/api/v1/shorten", WrapeService(sp, ShortenURL))
+	router.POST("/api/v1/shorten", WrapeService(appService, ShortenURL))
 
 	router.Run(addr)
 }
 
 type RequestHandler func(*gin.Context, *ServiceProvider)
 
-func WrapeService(sp *ServiceProvider, handler RequestHandler) gin.HandlerFunc {
+func WrapeService(appService *ServiceProvider, handler RequestHandler) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		handler(c, sp)
+		handler(c, appService)
 	}
 }

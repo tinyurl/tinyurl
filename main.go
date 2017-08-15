@@ -20,10 +20,10 @@ func main() {
 	flag.Parse()
 
 	mysqlClient := mysql.NewMySQLClient(configPath)
-	sp := &server.ServiceProvider{
+	appService := &server.ServiceProvider{
 		MysqlClient: mysqlClient,
 	}
 	addr := net.JoinHostPort(host, port)
 
-	server.Start(addr, sp)
+	server.Start(addr, appService)
 }
