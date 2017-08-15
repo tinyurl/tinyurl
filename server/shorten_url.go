@@ -22,7 +22,7 @@ func ShortenURL(c *gin.Context, sp *ServiceProvider) {
 	// check longurl
 	logrus.Infof("check if origin %s has existed in db.\n", originUrl)
 	var url entity.URL
-	sp.MysqlClient.DB.Where("origin_uel = ?", originUrl).First(&url)
+	sp.MysqlClient.DB.Where("origin_url = ?", originUrl).First(&url)
 	if url.OriginUrl == "" {
 		url.CreateTime = time.Now().UTC()
 		url.OriginUrl = originUrl
