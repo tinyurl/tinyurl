@@ -1,8 +1,8 @@
-// sender implement a uri sender
+// uriuuid implement a uri sender
 // each call of UriSender, it will return a unique string
 // the unique string represents a url which one-to-one with each other
 
-package sender
+package uriuuid
 
 var (
 	CHARS       = []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")

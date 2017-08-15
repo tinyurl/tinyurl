@@ -1,4 +1,4 @@
-package sender
+package uriuuid
 
 import (
 	"testing"
