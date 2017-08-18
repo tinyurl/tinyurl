@@ -10,7 +10,7 @@ var basicURIUUID = BasicURIUUID{}
 
 func TestBasicNew(t *testing.T) {
 	u0 := basicURIUUID.New()
-	assert.Equal(t, len(u0), BasicLen)
+	assert.Equal(t, len(u0), DefaultLen)
 }
 
 func TestBasicNewLen(t *testing.T) {
