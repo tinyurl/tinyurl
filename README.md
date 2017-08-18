@@ -1,6 +1,6 @@
 # TinyUrl
 
-[![Build Status](https://travis-ci.org/adolphlwq/tinyurl.svg?branch=0.1-dev)](https://travis-ci.org/adolphlwq/tinyurl)
+[![Build Status](https://travis-ci.org/adolphlwq/tinyurl.svg?branch=master)](https://travis-ci.org/adolphlwq/tinyurl)
 
 a url shorten web service written by Golang, Vue and Gin.
 
@@ -37,8 +37,7 @@ make
     - [X] use math/rand.Read instead math/rand.Intn func
 - [X] use logrus replace golang log lib
 - [X] reserch [wrk](https://github.com/wg/wrk)
-- [ ] add QR code support
-- [ ] add test case
+- [X] add test case
 - [ ] dynamic adjust short path length (default is 4)
 - [ ] count each url parse time (high concurrent situation)
 - [ ] qrcode support
@@ -46,3 +45,4 @@ make
 
 ## Reference
 - [GitHub/Ourls](https://github.com/takashiki/Ourls)
+- [GitHub/uriuni](https://github.com/dchest/uniuri)
