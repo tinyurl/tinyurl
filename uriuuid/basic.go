@@ -5,24 +5,17 @@ import (
 	"log"
 )
 
-var (
-	// BasicChars chars to consists of random string
-	BasicChars = []byte("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
-	// DefaultLen default random string length
-	BasicLen = 6
-)
-
 // BasicURIUUID basic implement of UriUUID interface
 type BasicURIUUID struct{}
 
 // New new uri with default length and []byte
 func (basic BasicURIUUID) New() string {
-	return basic.NewLenChars(BasicLen, BasicChars)
+	return basic.NewLenChars(DefaultLen, DefaultChars)
 }
 
 // NewLen new uri with given length and default []byte
 func (basic BasicURIUUID) NewLen(length int) string {
-	return basic.NewLenChars(length, BasicChars)
+	return basic.NewLenChars(length, DefaultChars)
 }
 
 // NewLenChars new uri with given lenth and []byte
