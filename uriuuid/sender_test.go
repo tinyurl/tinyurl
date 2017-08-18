@@ -27,17 +27,19 @@ var indexes = []struct {
 	{12906604, "ClJ2"},
 }
 
-func TestNew(t *testing.T) {
+var senderURIUUID = SenderURIUUID{}
+
+func TestSenderNew(t *testing.T) {
 	for s := 1; s < 2<<12; s++ {
-		i, ret := New()
-		assert.NotNil(t, i)
+		ret := senderURIUUID.New()
+		assert.NotNil(t, senderURIUUID.start)
 		assert.NotNil(t, ret)
 	}
 }
 
 func TestGetByteByIndex(t *testing.T) {
 	for _, I := range indexes {
-		ret := GetByteByIndex(I.Index, CHARS)
+		ret := GetByteByIndex(I.Index, DefaultChars)
 		assert.Equal(t, ret, I.Expected)
 	}
 }

@@ -4,26 +4,40 @@
 
 package uriuuid
 
-var (
-	CHARS       = []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
-	index int64 = 0
-	start int64 = 0
-	// m     sync.RWMutex
-)
-
-func New() (int64, string) {
-	// m.RLock()
-	// defer m.RUnlock()
-	start++
-	return start, GetByteByIndex(start, CHARS)
+type SenderURIUUID struct {
+	start int64
 }
 
-func GetByteByIndex(index int64, chars []byte) string {
-	baseLen := int64(len(chars))
+// New new uri with default length and []byte
+func (sender *SenderURIUUID) New() string {
+	// m.RLock()
+	// defer m.RUnlock()
+	sender.start++
+	return GetByteByIndex(sender.start, DefaultChars)
+}
+
+// New new uri with default length and []byte
+func (sender *SenderURIUUID) NewLen(length int) string {
+	// m.RLock()
+	// defer m.RUnlock()
+	sender.start++
+	return GetByteByIndex(sender.start, DefaultChars)
+}
+
+// New new uri with default length and []byte
+func (sender *SenderURIUUID) NewLenDefaultChars(length int, DefaultChars []byte) string {
+	// m.RLock()
+	// defer m.RUnlock()
+	sender.start++
+	return GetByteByIndex(sender.start, DefaultChars)
+}
+
+func GetByteByIndex(index int64, DefaultChars []byte) string {
+	baseLen := int64(len(DefaultChars))
 	var container []byte
 	for ; index != 0; index = index / baseLen {
 		m := index % baseLen
-		container = append(container, chars[m])
+		container = append(container, DefaultChars[m])
 	}
 
 	return string(container)
