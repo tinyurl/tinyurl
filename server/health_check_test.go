@@ -20,7 +20,7 @@ func TestHealthCheck(t *testing.T) {
 	if err != nil {
 		t.Errorf("read health check response body error: %v\n", err)
 	}
-	expected := `{"data":"health","status":200}`
+	expected := `{"message":"health"}`
 	if string(expected) != string(body) {
 		t.Errorf("response body error, expected is %v but got %v\n", expected, body)
 	}
