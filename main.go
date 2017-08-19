@@ -6,6 +6,7 @@ import (
 
 	"github.com/adolphlwq/tinyurl/mysql"
 	"github.com/adolphlwq/tinyurl/server"
+	"github.com/adolphlwq/tinyurl/uriuuid"
 )
 
 func main() {
@@ -22,6 +23,7 @@ func main() {
 	mysqlClient := mysql.NewMySQLClient(configPath)
 	appService := &server.ServiceProvider{
 		MysqlClient: mysqlClient,
+		UriUUID:     uriuuid.BasicURIUUID{},
 	}
 	addr := net.JoinHostPort(host, port)
 
