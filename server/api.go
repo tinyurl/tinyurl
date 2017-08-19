@@ -8,8 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Start start server
-func Start(addr string, appService *ServiceProvider) {
+// BuildEngine return gin.Engine with route
+func BuildEngine(appService *ServiceProvider) *gin.Engine {
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
 		AllowMethods: []string{"GET", "POST"},
@@ -28,6 +28,12 @@ func Start(addr string, appService *ServiceProvider) {
 	router.GET("/health", HealthCheck)
 	router.POST("/api/v1/shorten", WrapeService(appService, ShortenURL))
 
+	return router
+}
+
+// Start start server
+func Start(addr string, appService *ServiceProvider) {
+	router := BuildEngine(appService)
 	router.Run(addr)
 }
 
