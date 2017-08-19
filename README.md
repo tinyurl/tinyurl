@@ -1,6 +1,6 @@
-# TinyUrl
+# TinyURL
 
-[![Build Status](https://travis-ci.org/adolphlwq/tinyurl.svg?branch=master)](https://travis-ci.org/adolphlwq/tinyurl)
+[![Build Status](https://travis-ci.org/adolphlwq/tinyurl.svg?branch=master)](https://travis-ci.org/adolphlwq/tinyurl)  [![Go Report Card](https://goreportcard.com/badge/github.com/adolphlwq/tinyurl)](https://goreportcard.com/report/github.com/adolphlwq/tinyurl)
 
 a url shorten web service written by Golang, Vue and Gin.
 
