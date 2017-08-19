@@ -41,12 +41,12 @@ func ShortenURL(c *gin.Context, appService *ServiceProvider) {
 		appService.MysqlClient.DB.Create(&url)
 
 		c.JSON(http.StatusOK, gin.H{
-			"message":    "shorten url success.",
+			"message":    ShortenURLSuccess,
 			"short_path": url.ShortPath,
 		})
 	} else {
 		c.JSON(http.StatusOK, gin.H{
-			"message":    "short path has existed.",
+			"message":    ShortPathExisted,
 			"short_path": url.ShortPath,
 		})
 	}

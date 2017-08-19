@@ -19,7 +19,7 @@ func TestShortenURL(t *testing.T) {
 	assert.NotNil(t, map1)
 	shortPath := map1["short_path"].(string)
 	assert.Equal(t, len(shortPath), 6)
-	assert.Equal(t, map1["message"], "shorten url success.")
+	assert.Equal(t, map1["message"], ShortenURLSuccess)
 
 	// test url has existed
 	testURL := newTestURL()
@@ -28,7 +28,7 @@ func TestShortenURL(t *testing.T) {
 	ret2 := PostForm(shortenURLAPI, postData1)
 	map2 := ret2.(map[string]interface{})
 	assert.NotNil(t, map2)
-	assert.Equal(t, map2["message"], "short path has existed.")
+	assert.Equal(t, map2["message"], ShortPathExisted)
 	assert.Equal(t, map2["short_path"], shortPath)
 
 	clearDatabase()
