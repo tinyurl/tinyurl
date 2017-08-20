@@ -40,12 +40,12 @@ app = new Vue({
             var postUrl = apiUrl+"/api/v1/shorten"
             config = { headers: { 'Content-Type': 'multipart/form-data'}}
             formData = new FormData()
-            formData.append('longurl', self.url)
+            formData.append('origin_url', self.url)
             
             axios.post(postUrl, formData, config)
             .then(function(response) {
                 data = response.data
-                self.url="http://tinyurl.adolphlwq.xyz/n/"+data["shortpath"]
+                self.url="http://tinyurl.adolphlwq.xyz/n/"+data["short_path"]
             })
             .catch(function(error) {
                 alert(error)
