@@ -10,7 +10,7 @@ import (
 
 // ParseURL parse shorten path and return source url
 func ParseURL(c *gin.Context, appService *ServiceProvider) {
-	shortPath := c.Param("short_path")
+	shortPath := c.Param("shortpath")
 	if shortPath == "" {
 		logrus.Warnf("shortpath is nil, return default home path.\n")
 		c.Redirect(http.StatusMovedPermanently, "http://tinyurl.adolphlwq.xyz")
