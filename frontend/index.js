@@ -7,10 +7,9 @@ app = new Vue({
         url: ''
     },
     methods: {
-        validateInput: function() {
+        validateInput: function(url) {
             // refer http://www.cnblogs.com/554006164/archive/2009/06/16/1504160.html
-            var urlRegex = "^((https|http|ftp|rtsp|mms)?://)"  
-                + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" //ftp的user@  
+            var urlRegex = "^((https|http)?://)"  
                 + "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184  
                 + "|" // 允许IP和DOMAIN（域名） 
                 + "([0-9a-z_!~*'()-]+\.)*" // 域名- www.  
@@ -20,9 +19,11 @@ app = new Vue({
                 + "((/?)|" // a slash isn't required if there is no file name  
                 + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$"
             var re = new RegExp(urlRegex)
-            if (re.test(this.url)) {
+            if (re.test(url)) {
+                console.log('url ', url, ' is validate')
                 return true
             }
+            console.log('url ', url, ' is not validate')            
             return false
         },
         shortenUrl: function() {
@@ -32,7 +33,7 @@ app = new Vue({
                 return
             }
 
-            if (!self.validateInput()) {
+            if (!self.validateInput(self.url)) {
                 alert("your input url is not validate!")
                 return
             }
