@@ -1,4 +1,3 @@
-//var apiUrl="http://tinyurl.api.adolphlwq.xyz"
 var apiUrl="http://localhost:8877"
 
 app = new Vue({
