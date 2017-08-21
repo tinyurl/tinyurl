@@ -21,7 +21,7 @@
 ## Quick Start
 1. clone project to **GOPATH**
 ```
-git clone https://github.com/adolphlwq/tinyurl.git $GOPATH/src/tinyurl
+git clone https://github.com/adolphlwq/tinyurl.git $GOPATH/src/github.com/adolphlwq/tinyurl
 ```
 2. sync golang packages
 ```
