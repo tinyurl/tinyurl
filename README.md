@@ -2,10 +2,15 @@
 
 [![Build Status](https://travis-ci.org/adolphlwq/tinyurl.svg?branch=master)](https://travis-ci.org/adolphlwq/tinyurl)  [![Go Report Card](https://goreportcard.com/badge/github.com/adolphlwq/tinyurl)](https://goreportcard.com/report/github.com/adolphlwq/tinyurl)  [![GoDoc](https://godoc.org/github.com/adolphlwq/tinyurl?status.svg)](https://godoc.org/github.com/adolphlwq/tinyurl)
 
-a url shorten web service written by Golang, Vue and Gin.
+<p align="center">
+  <a href="http://tinyurl.adolphlwq.xyz" target="_blank">
+    <img src="tinyurl.png" width="700px">
+    <br>
+    Live Demo
+  </a>
+</p>
 
-## Demo
-browse [tinyUrl demo website](http://tinyurl.adolphlwq.xyz) and enjoy yourself.
+<p align="center">a url shorten web service written by Golang, Vue and Gin.</p>
 
 ## Requisites
 - Golang(1.8+)
