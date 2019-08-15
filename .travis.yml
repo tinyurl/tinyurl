@@ -1,5 +1,8 @@
 language: go
 
+services:
+  - mysql
+
 go:
   - 1.8
 
