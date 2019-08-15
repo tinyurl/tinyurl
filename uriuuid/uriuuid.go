@@ -4,7 +4,7 @@ var (
 	// DefaultChars chars to consists of random string
 	DefaultChars = []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
 	// DefaultLen default random string length
-	DefaultLen = 6
+	DefaultLen = 8
 )
 
 // UriUUID interface for extension
