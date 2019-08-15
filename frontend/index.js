@@ -45,7 +45,7 @@ app = new Vue({
             axios.post(postUrl, formData, config)
             .then(function(response) {
                 data = response.data
-                self.url="http://tinyurl.adolphlwq.xyz/n/"+data["short_path"]
+                self.url = data["short_path"]
             })
             .catch(function(error) {
                 alert(error)

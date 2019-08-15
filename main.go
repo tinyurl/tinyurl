@@ -4,28 +4,24 @@ import (
 	"flag"
 	"net"
 
+	"github.com/adolphlwq/tinyurl/config"
 	"github.com/adolphlwq/tinyurl/mysql"
 	"github.com/adolphlwq/tinyurl/server"
 	"github.com/adolphlwq/tinyurl/uriuuid"
 )
 
 func main() {
-	var (
-		configPath string
-		host       string
-		port       string
-	)
+	var configPath string
 	flag.StringVar(&configPath, "config", "default.properties", "config path")
-	flag.StringVar(&host, "host", "0.0.0.0", "tinyurl server bind host")
-	flag.StringVar(&port, "port", "8877", "tinyurl server bind port")
 	flag.Parse()
 
 	mysqlClient := mysql.NewMySQLClient(configPath)
-	appService := &server.ServiceProvider{
-		MysqlClient: mysqlClient,
-		UriUUID:     uriuuid.BasicURIUUID{},
+	app := &server.ServiceProvider{
+		MysqlClient:  mysqlClient,
+		UriUUID:      uriuuid.BasicURIUUID{},
+		GlobalConfig: config.GetGlobalConfig(configPath),
 	}
-	addr := net.JoinHostPort(host, port)
 
-	server.Start(addr, appService)
+	addr := net.JoinHostPort(app.GlobalConfig.Host, app.GlobalConfig.Port)
+	server.Start(addr, app)
 }
