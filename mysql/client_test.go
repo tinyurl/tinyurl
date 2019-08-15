@@ -6,16 +6,18 @@ import (
 	"testing"
 
 	"github.com/Sirupsen/logrus"
+	"github.com/adolphlwq/tinyurl/config"
 )
 
 var (
-	setting *MySQLSetting = NewMySQLSetting(configPath)
-	client  *Client       = NewMySQLClient(configPath)
+	configPath                      = "../defult.properties"
+	setting    *config.GlobalConfig = config.GetGlobalConfig(configPath)
+	client     *Client              = NewMySQLClient(configPath)
 )
 
-func newSqlDB(setting *MySQLSetting) *sql.DB {
-	source := fmt.Sprintf("%s:%s@tcp(%s:%s)/", setting.User, setting.Password,
-		setting.Host, setting.Port)
+func newSqlDB(setting *config.GlobalConfig) *sql.DB {
+	source := fmt.Sprintf("%s:%s@tcp(%s:%s)/", setting.DBUser, setting.DBPassword,
+		setting.DBHost, setting.DBPort)
 	db, err := sql.Open("mysql", source)
 	if err != nil {
 		logrus.Fatalf("connection to db error: %s", err)
@@ -40,7 +42,7 @@ func TestCheckDB(t *testing.T) {
 	defer db.Close()
 
 	// check if database exist
-	sql := fmt.Sprintf("USE %s;", setting.Database)
+	sql := fmt.Sprintf("USE %s;", setting.DBName)
 	_, err := db.Exec(sql)
 	if err != nil {
 		t.Errorf("show databases error: %s\n", err)
