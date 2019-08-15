@@ -10,11 +10,7 @@ dev:
 
 # run test cases
 test:
-	# make start-container
-	# echo "sleep 5s for mysql to setup..."
-	# sleep 5
 	go test --cover $(PKGS)
-	# make clean-container
 
 start-container:
 	docker run -d --name tinyurl_mysql --net host \
