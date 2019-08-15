@@ -16,12 +16,17 @@ func TestHealthCheck(t *testing.T) {
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != 200 {
+		t.Errorf("Response status code should be 200, but got %d", resp.StatusCode)
+	}
+
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		t.Errorf("read health check response body error: %v\n", err)
 	}
-	expected := `{"message":"health"}`
-	if string(expected) != string(body) {
-		t.Errorf("response body error, expected is %v but got %v\n", expected, body)
+
+	expected := "{\"message\":\"health\"}"
+	if expected != string(body) {
+		t.Errorf("response body error, expected is %v but got %v\n", expected, string(body))
 	}
 }
