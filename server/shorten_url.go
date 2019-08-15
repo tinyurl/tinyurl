@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -32,12 +33,12 @@ func ShortenURL(c *gin.Context, appService *ServiceProvider) {
 
 		c.JSON(http.StatusOK, gin.H{
 			"message":    ShortenURLSuccess,
-			"short_path": url.ShortPath,
+			"short_path": fmt.Sprintf("%s/n/%s", appService.GlobalConfig.Domain, url.ShortPath),
 		})
 	} else {
 		c.JSON(http.StatusOK, gin.H{
 			"message":    ShortPathExisted,
-			"short_path": url.ShortPath,
+			"short_path": fmt.Sprintf("%s/n/%s", appService.GlobalConfig.Domain, url.ShortPath),
 		})
 	}
 }

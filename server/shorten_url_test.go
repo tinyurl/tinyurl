@@ -18,7 +18,6 @@ func TestShortenURL(t *testing.T) {
 	map1 := ret1.(map[string]interface{})
 	assert.NotNil(t, map1)
 	shortPath := map1["short_path"].(string)
-	assert.Equal(t, len(shortPath), 6)
 	assert.Equal(t, map1["message"], ShortenURLSuccess)
 
 	// test url has existed

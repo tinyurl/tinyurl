@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
+	"github.com/adolphlwq/tinyurl/config"
 	"github.com/adolphlwq/tinyurl/entity"
 	"github.com/adolphlwq/tinyurl/mysql"
 	"github.com/adolphlwq/tinyurl/uriuuid"
@@ -17,7 +18,7 @@ import (
 const (
 	TestPort      = "9090"
 	TestAddr      = "http://0.0.0.0:9090"
-	ConfigPath    = "../test.properties"
+	ConfigPath    = "../defult.properties"
 	TestOriginURL = "http://test.origin.url"
 	TestShortPath = "shortpath"
 )
@@ -30,8 +31,9 @@ var (
 func init() {
 	mysqlClient = mysql.NewMySQLClient(ConfigPath)
 	appService = &ServiceProvider{
-		MysqlClient: mysqlClient,
-		UriUUID:     uriuuid.BasicURIUUID{},
+		MysqlClient:  mysqlClient,
+		UriUUID:      uriuuid.BasicURIUUID{},
+		GlobalConfig: config.GetGlobalConfig(ConfigPath),
 	}
 }
 

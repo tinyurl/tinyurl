@@ -4,6 +4,9 @@ PKGS=$(shell go list ./... | grep -E -v "(vendor)")
 all:
 	go build $(GO_BUILD_FLAGS) -o tinyurl
 
+build:
+	go build $(GO_BUILD_FLAGS) -o tinyurl
+
 # run binary in dev mode
 dev:
 	./tinyurl -config dev.properties
@@ -14,7 +17,7 @@ test:
 
 start-container:
 	docker run -d --name tinyurl_mysql --net host \
-	-e MYSQL_ALLOW_EMPTY_PASSWORD=yes -e MYSQL_DATABASE=test_tinyurl mysql:5.7
+	-e MYSQL_ALLOW_EMPTY_PASSWORD=yes -e MYSQL_DATABASE=tinyurldb mysql:5.7
 
 clean-container:
 	docker stop tinyurl_mysql
