@@ -12,8 +12,16 @@ dev:
 	./tinyurl -config dev.properties
 
 # run test cases
+test-mysql:
+	TINYURL_CONFIG_PATH="./store/test_data/mysql.properties" go test --cover $(PKGS)
+test-sqlite3:
+	TINYURL_CONFIG_PATH="./store/test_data/sqlite3.properties" go test --cover $(PKGS)
+
 test:
-	go test --cover $(PKGS)
+	echo "test with mysql"
+	make test-mysql
+	echo "test with sqlite3"
+	make test-sqlite3
 
 start-container:
 	docker run -d --name tinyurl_mysql --net host \

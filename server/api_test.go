@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"testing"
 	"time"
 
@@ -16,20 +17,27 @@ import (
 )
 
 const (
-	TestPort      = "8877"
-	TestAddr      = "http://0.0.0.0:8877"
-	ConfigPath    = "../defult.properties"
-	TestOriginURL = "http://test.origin.url"
-	TestShortPath = "shortpath"
+	TestPort          = "8877"
+	TestAddr          = "http://0.0.0.0:8877"
+	ConfigPathDefault = "../defult.properties"
+	TestOriginURL     = "http://test.origin.url"
+	TestShortPath     = "shortpath"
 )
 
 var (
+	ConfigPath  string
 	storeClient entity.URLStore
 	appService  *entity.ServiceProvider
 )
 
 func init() {
-	storeClient = store.NewMySQLClient(ConfigPath)
+	os.Setenv("TINYURL_CONFIG_PATH", "../defult.properties")
+	ConfigPath = os.Getenv("TINYURL_CONFIG_PATH")
+	if ConfigPath == "" {
+		ConfigPath = ConfigPathDefault
+	}
+
+	storeClient = store.GetURLStore(ConfigPath)
 	appService = &entity.ServiceProvider{
 		StoreClient:  storeClient,
 		UriUUID:      uriuuid.BasicURIUUID{},
