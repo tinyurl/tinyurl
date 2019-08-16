@@ -4,10 +4,9 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/adolphlwq/tinyurl/entity"
-
 	"github.com/Sirupsen/logrus"
 	"github.com/adolphlwq/tinyurl/config"
+	"github.com/adolphlwq/tinyurl/entity"
 	"github.com/jinzhu/gorm"
 )
 

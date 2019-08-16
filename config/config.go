@@ -23,6 +23,7 @@ type GlobalConfig struct {
 
 	// DB config
 	DBType     string
+	DBPath     string
 	DBHost     string
 	DBPort     string
 	DBName     string
@@ -37,12 +38,13 @@ func GetGlobalConfig(configPath string) *GlobalConfig {
 		Host:       props.MustGet("app.host"),
 		Port:       props.MustGet("app.port"),
 		Domain:     props.MustGet("app.domain"),
-		DBType:     props.GetString("db.type", "sqlite3"),
-		DBHost:     props.MustGetString("db.host"),
-		DBPort:     props.MustGetString("db.port"),
-		DBName:     props.MustGetString("db.name"),
-		DBUser:     props.MustGetString("db.user"),
-		DBPassword: props.MustGetString("db.password"),
+		DBType:     props.MustGet("db.type"),
+		DBPath:     props.GetString("db.path", ""),
+		DBHost:     props.GetString("db.host", ""),
+		DBPort:     props.GetString("db.port", ""),
+		DBName:     props.GetString("db.name", ""),
+		DBUser:     props.GetString("db.user", ""),
+		DBPassword: props.GetString("db.password", ""),
 	}
 
 	return config

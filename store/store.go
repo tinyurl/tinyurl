@@ -13,6 +13,9 @@ func GetURLStore(configPath string) entity.URLStore {
 	case "mysql":
 		urlStore = NewMySQLClient(configPath)
 		break
+	case "sqlite3":
+		urlStore = NewSqlite3Client(configPath)
+		break
 	default:
 		urlStore = NewMySQLClient(configPath)
 	}
