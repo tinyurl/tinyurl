@@ -5,33 +5,41 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"testing"
 	"time"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/adolphlwq/tinyurl/config"
 	"github.com/adolphlwq/tinyurl/entity"
-	"github.com/adolphlwq/tinyurl/mysql"
+	"github.com/adolphlwq/tinyurl/store"
 	"github.com/adolphlwq/tinyurl/uriuuid"
 )
 
 const (
-	TestPort      = "9090"
-	TestAddr      = "http://0.0.0.0:9090"
-	ConfigPath    = "../defult.properties"
-	TestOriginURL = "http://test.origin.url"
-	TestShortPath = "shortpath"
+	TestPort          = "8877"
+	TestAddr          = "http://0.0.0.0:8877"
+	ConfigPathDefault = "../defult.properties"
+	TestOriginURL     = "http://test.origin.url"
+	TestShortPath     = "shortpath"
 )
 
 var (
-	mysqlClient *mysql.Client
-	appService  *ServiceProvider
+	ConfigPath  string
+	storeClient entity.URLStore
+	appService  *entity.ServiceProvider
 )
 
 func init() {
-	mysqlClient = mysql.NewMySQLClient(ConfigPath)
-	appService = &ServiceProvider{
-		MysqlClient:  mysqlClient,
+	os.Setenv("TINYURL_CONFIG_PATH", "../defult.properties")
+	ConfigPath = os.Getenv("TINYURL_CONFIG_PATH")
+	if ConfigPath == "" {
+		ConfigPath = ConfigPathDefault
+	}
+
+	storeClient = store.GetURLStore(ConfigPath)
+	appService = &entity.ServiceProvider{
+		StoreClient:  storeClient,
 		UriUUID:      uriuuid.BasicURIUUID{},
 		GlobalConfig: config.GetGlobalConfig(ConfigPath),
 	}
@@ -45,15 +53,15 @@ func newTestURL() entity.URL {
 }
 
 func insertTestURL(url entity.URL) {
-	appService.MysqlClient.DB.Create(&url)
+	appService.StoreClient.Create(&url)
 }
 
 func updateTestURL(url entity.URL) {
-	appService.MysqlClient.DB.Save(&url)
+	appService.StoreClient.Update(&url)
 }
 
 func clearDatabase() {
-	appService.MysqlClient.DropDatabase()
+	appService.StoreClient.DropDatabase()
 }
 
 func PostForm(postURL string, data url.Values) interface{} {

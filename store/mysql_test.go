@@ -1,4 +1,4 @@
-package mysql
+package store
 
 import (
 	"database/sql"
@@ -10,12 +10,12 @@ import (
 )
 
 var (
-	configPath                      = "../defult.properties"
-	setting    *config.GlobalConfig = config.GetGlobalConfig(configPath)
-	client     *Client              = NewMySQLClient(configPath)
+	configPathMySQL              = "test_data/mysql.properties"
+	mysqlClient     *MySQLClient = NewMySQLClient(configPathMySQL)
 )
 
-func newSqlDB(setting *config.GlobalConfig) *sql.DB {
+func newSqlDB(configPath string) *sql.DB {
+	setting := config.GetGlobalConfig(configPath)
 	source := fmt.Sprintf("%s:%s@tcp(%s:%s)/", setting.DBUser, setting.DBPassword,
 		setting.DBHost, setting.DBPort)
 	db, err := sql.Open("mysql", source)
@@ -27,7 +27,7 @@ func newSqlDB(setting *config.GlobalConfig) *sql.DB {
 }
 
 func TestNewMySQLClient(t *testing.T) {
-	client := NewMySQLClient(configPath)
+	client := NewMySQLClient(configPathMySQL)
 	if client == nil {
 		t.Errorf("client should not be nil")
 	}
@@ -36,9 +36,10 @@ func TestNewMySQLClient(t *testing.T) {
 	client.DropDatabase()
 }
 
-func TestCheckDB(t *testing.T) {
-	CheckDB(setting)
-	db := newSqlDB(setting)
+func TestCreateDB(t *testing.T) {
+	setting := config.GetGlobalConfig(configPathMySQL)
+	mysqlClient.CreateDB(setting)
+	db := newSqlDB(configPathMySQL)
 	defer db.Close()
 
 	// check if database exist
@@ -49,9 +50,9 @@ func TestCheckDB(t *testing.T) {
 	}
 
 	t.Logf("init db success, drop test database.\n")
-	client.DropDatabase()
+	mysqlClient.DropDatabase()
 }
 
 func TestDropDatabase(t *testing.T) {
-	client.DropDatabase()
+	mysqlClient.DropDatabase()
 }

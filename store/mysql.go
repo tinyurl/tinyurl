@@ -1,4 +1,4 @@
-package mysql
+package store
 
 import (
 	"database/sql"
@@ -7,22 +7,19 @@ import (
 	"github.com/Sirupsen/logrus"
 	"github.com/adolphlwq/tinyurl/config"
 	"github.com/adolphlwq/tinyurl/entity"
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 )
 
-// Client hold mysql connection and wrape CRUD methods
-type Client struct {
-	DB       *gorm.DB
-	Database string
+type MySQLClient struct {
+	db     *gorm.DB
+	DBName string
 }
 
-// NewMySQLClient return new MySQLClient instance
-func NewMySQLClient(configPath string) *Client {
+func NewMySQLClient(configPath string) *MySQLClient {
 	setting := config.GetGlobalConfig(configPath)
-	mc := &Client{}
+	c := &MySQLClient{}
+	c.CreateDB(setting)
 
-	CheckDB(setting)
 	source := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
 		setting.DBUser, setting.DBPassword, setting.DBHost, setting.DBPort, setting.DBName)
 	db, err := gorm.Open("mysql", source)
@@ -30,17 +27,38 @@ func NewMySQLClient(configPath string) *Client {
 		logrus.Fatalf("open connection to mysql use gorm error: %s", err)
 	}
 
-	mc.Database = setting.DBName
-	mc.DB = db
-	mc.DB.AutoMigrate(&entity.URL{})
-	logrus.Infof("create table urls done.\n")
+	c.DBName = setting.DBName
+	c.db = db
+	c.db.AutoMigrate(&entity.URL{})
 
-	return mc
+	return c
 }
 
-// CheckDB check if database existed in db
+func (c *MySQLClient) Create(url *entity.URL) {
+	c.db.Create(url)
+}
+
+func (c *MySQLClient) Update(url *entity.URL) {
+	c.db.Save(url)
+}
+
+func (c *MySQLClient) GetByOriginURL(originURL string) *entity.URL {
+	var url entity.URL
+	c.db.Where("origin_url = ?", originURL).First(&url)
+
+	return &url
+}
+
+func (c *MySQLClient) GetByShortPath(shortPath string) *entity.URL {
+	var url entity.URL
+	c.db.Where("short_path = ?", shortPath).First(&url)
+
+	return &url
+}
+
+// CreateDB check if database existed in db
 // create database if not
-func CheckDB(setting *config.GlobalConfig) {
+func (c *MySQLClient) CreateDB(setting *config.GlobalConfig) {
 	source := fmt.Sprintf("%s:%s@tcp(%s:%s)/", setting.DBUser, setting.DBPassword,
 		setting.DBHost, setting.DBPort)
 	db, err := sql.Open("mysql", source)
@@ -57,12 +75,12 @@ func CheckDB(setting *config.GlobalConfig) {
 }
 
 // DropDatabase drop self hold database
-func (c *Client) DropDatabase() {
-	sql := fmt.Sprintf("DROP DATABASE IF EXISTS %s;", c.Database)
-	db := c.DB.DB()
+func (c *MySQLClient) DropDatabase() {
+	sql := fmt.Sprintf("DROP DATABASE IF EXISTS %s;", c.DBName)
+	db := c.db.DB()
 
 	_, err := db.Exec(sql)
 	if err != nil {
-		logrus.Fatalf("drop database %s error: %v", c.Database, err)
+		logrus.Fatalf("drop database %s error: %v", c.DBName, err)
 	}
 }

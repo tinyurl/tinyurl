@@ -11,7 +11,7 @@ import (
 )
 
 // ShortenURL shorten origin url and save to db
-func ShortenURL(c *gin.Context, appService *ServiceProvider) {
+func ShortenURL(c *gin.Context, appService *entity.ServiceProvider) {
 	OriginURL := c.PostForm("origin_url")
 
 	if OriginURL == "" {
@@ -22,14 +22,13 @@ func ShortenURL(c *gin.Context, appService *ServiceProvider) {
 	}
 
 	// check longurl
-	logrus.Infof("check if origin %s has existed in db.\n", OriginURL)
-	var url entity.URL
-	appService.MysqlClient.DB.Where("origin_url = ?", OriginURL).First(&url)
+	logrus.Infof("check if origin url %s has existed in db.\n", OriginURL)
+	url := appService.StoreClient.GetByOriginURL(OriginURL)
 	if url.OriginURL == "" {
 		url.ShortPath = appService.UriUUID.New()
 		url.CreateTime = time.Now().UTC()
 		url.OriginURL = OriginURL
-		appService.MysqlClient.DB.Create(&url)
+		appService.StoreClient.Create(url)
 
 		c.JSON(http.StatusOK, gin.H{
 			"message":    ShortenURLSuccess,
