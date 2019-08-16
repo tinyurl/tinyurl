@@ -11,7 +11,7 @@ import (
 	"github.com/Sirupsen/logrus"
 	"github.com/adolphlwq/tinyurl/config"
 	"github.com/adolphlwq/tinyurl/entity"
-	"github.com/adolphlwq/tinyurl/mysql"
+	"github.com/adolphlwq/tinyurl/store"
 	"github.com/adolphlwq/tinyurl/uriuuid"
 )
 
@@ -24,12 +24,12 @@ const (
 )
 
 var (
-	mysqlClient *mysql.Client
+	mysqlClient *store.Client
 	appService  *ServiceProvider
 )
 
 func init() {
-	mysqlClient = mysql.NewMySQLClient(ConfigPath)
+	mysqlClient = store.NewMySQLClient(ConfigPath)
 	appService = &ServiceProvider{
 		MysqlClient:  mysqlClient,
 		UriUUID:      uriuuid.BasicURIUUID{},

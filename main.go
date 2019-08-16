@@ -5,8 +5,8 @@ import (
 	"net"
 
 	"github.com/adolphlwq/tinyurl/config"
-	"github.com/adolphlwq/tinyurl/mysql"
 	"github.com/adolphlwq/tinyurl/server"
+	"github.com/adolphlwq/tinyurl/store"
 	"github.com/adolphlwq/tinyurl/uriuuid"
 )
 
@@ -15,7 +15,7 @@ func main() {
 	flag.StringVar(&configPath, "config", "default.properties", "config path")
 	flag.Parse()
 
-	mysqlClient := mysql.NewMySQLClient(configPath)
+	mysqlClient := store.NewMySQLClient(configPath)
 	app := &server.ServiceProvider{
 		MysqlClient:  mysqlClient,
 		UriUUID:      uriuuid.BasicURIUUID{},
