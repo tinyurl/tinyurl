@@ -4,12 +4,13 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
+	"github.com/adolphlwq/tinyurl/entity"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 // BuildEngine return gin.Engine with route
-func BuildEngine(appService *ServiceProvider) *gin.Engine {
+func BuildEngine(appService *entity.ServiceProvider) *gin.Engine {
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
 		AllowMethods: []string{"GET", "POST"},
@@ -32,14 +33,14 @@ func BuildEngine(appService *ServiceProvider) *gin.Engine {
 }
 
 // Start start server
-func Start(addr string, appService *ServiceProvider) {
+func Start(addr string, appService *entity.ServiceProvider) {
 	router := BuildEngine(appService)
 	router.Run(addr)
 }
 
-type RequestHandler func(*gin.Context, *ServiceProvider)
+type RequestHandler func(*gin.Context, *entity.ServiceProvider)
 
-func WrapeService(appService *ServiceProvider, handler RequestHandler) gin.HandlerFunc {
+func WrapeService(appService *entity.ServiceProvider, handler RequestHandler) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		handler(c, appService)
 	}

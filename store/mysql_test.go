@@ -12,7 +12,7 @@ import (
 var (
 	configPath                      = "../defult.properties"
 	setting    *config.GlobalConfig = config.GetGlobalConfig(configPath)
-	client     *Client              = NewMySQLClient(configPath)
+	client     *MySQLClient         = NewMySQLClient(configPath)
 )
 
 func newSqlDB(setting *config.GlobalConfig) *sql.DB {
@@ -36,8 +36,8 @@ func TestNewMySQLClient(t *testing.T) {
 	client.DropDatabase()
 }
 
-func TestCheckDB(t *testing.T) {
-	CheckDB(setting)
+func TestCreateDB(t *testing.T) {
+	client.CreateDB(setting)
 	db := newSqlDB(setting)
 	defer db.Close()
 
