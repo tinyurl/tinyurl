@@ -4,7 +4,6 @@ import (
 	"flag"
 	"net"
 
-	"github.com/adolphlwq/tinyurl/config"
 	"github.com/adolphlwq/tinyurl/entity"
 	"github.com/adolphlwq/tinyurl/server"
 	"github.com/adolphlwq/tinyurl/store"
@@ -20,7 +19,7 @@ func main() {
 	app := &entity.ServiceProvider{
 		StoreClient:  urlStore,
 		UriUUID:      uriuuid.BasicURIUUID{},
-		GlobalConfig: config.GetGlobalConfig(configPath),
+		GlobalConfig: entity.GetGlobalConfig(configPath),
 	}
 
 	addr := net.JoinHostPort(app.GlobalConfig.Host, app.GlobalConfig.Port)

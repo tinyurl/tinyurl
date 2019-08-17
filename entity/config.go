@@ -1,4 +1,4 @@
-package config
+package entity
 
 import (
 	"github.com/Sirupsen/logrus"

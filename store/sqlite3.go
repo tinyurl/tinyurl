@@ -6,7 +6,6 @@ import (
 	"os"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/adolphlwq/tinyurl/config"
 	"github.com/adolphlwq/tinyurl/entity"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
@@ -19,7 +18,7 @@ type Sqlite3Client struct {
 }
 
 func NewSqlite3Client(configPath string) *Sqlite3Client {
-	setting := config.GetGlobalConfig(configPath)
+	setting := entity.GetGlobalConfig(configPath)
 	source := fmt.Sprintf("%s/%s", setting.DBPath, setting.DBName)
 	c := &Sqlite3Client{}
 	db, err := gorm.Open("sqlite3", source)
@@ -59,7 +58,7 @@ func (c *Sqlite3Client) GetByShortPath(shortPath string) *entity.URL {
 
 // CreateDB check if database existed in db
 // create database if not
-func (c *Sqlite3Client) CreateDB(setting *config.GlobalConfig) {
+func (c *Sqlite3Client) CreateDB(setting *entity.GlobalConfig) {
 	source := fmt.Sprintf("%s/%s", setting.DBPath, setting.DBName)
 	db, err := sql.Open("sqlite3", source)
 	if err != nil {
@@ -77,7 +76,7 @@ func (c *Sqlite3Client) CreateDB(setting *config.GlobalConfig) {
 // DropDatabase drop self hold database
 func (c *Sqlite3Client) DropDatabase() {
 	// sqlite does not have DROP DATABASE command, we just delete file
-	setting := config.GetGlobalConfig(c.configPath)
+	setting := entity.GetGlobalConfig(c.configPath)
 	source := fmt.Sprintf("%s/%s", setting.DBPath, setting.DBName)
 	if err := os.Remove(source); err != nil {
 		logrus.Fatalf("drop database %s error: %v", c.DBName, err)
