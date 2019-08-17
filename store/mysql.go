@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/adolphlwq/tinyurl/config"
 	"github.com/adolphlwq/tinyurl/entity"
 	"github.com/jinzhu/gorm"
 )
@@ -16,7 +15,7 @@ type MySQLClient struct {
 }
 
 func NewMySQLClient(configPath string) *MySQLClient {
-	setting := config.GetGlobalConfig(configPath)
+	setting := entity.GetGlobalConfig(configPath)
 	c := &MySQLClient{}
 	c.CreateDB(setting)
 
@@ -58,7 +57,7 @@ func (c *MySQLClient) GetByShortPath(shortPath string) *entity.URL {
 
 // CreateDB check if database existed in db
 // create database if not
-func (c *MySQLClient) CreateDB(setting *config.GlobalConfig) {
+func (c *MySQLClient) CreateDB(setting *entity.GlobalConfig) {
 	source := fmt.Sprintf("%s:%s@tcp(%s:%s)/", setting.DBUser, setting.DBPassword,
 		setting.DBHost, setting.DBPort)
 	db, err := sql.Open("mysql", source)

@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/adolphlwq/tinyurl/config"
 	"github.com/adolphlwq/tinyurl/entity"
 	"github.com/adolphlwq/tinyurl/store"
 	"github.com/adolphlwq/tinyurl/uriuuid"
@@ -41,7 +40,7 @@ func init() {
 	appService = &entity.ServiceProvider{
 		StoreClient:  storeClient,
 		UriUUID:      uriuuid.BasicURIUUID{},
-		GlobalConfig: config.GetGlobalConfig(ConfigPath),
+		GlobalConfig: entity.GetGlobalConfig(ConfigPath),
 	}
 }
 

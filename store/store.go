@@ -1,14 +1,13 @@
 package store
 
 import (
-	"github.com/adolphlwq/tinyurl/config"
 	"github.com/adolphlwq/tinyurl/entity"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 func GetURLStore(configPath string) entity.URLStore {
 	var urlStore entity.URLStore
-	setting := config.GetGlobalConfig(configPath)
+	setting := entity.GetGlobalConfig(configPath)
 	switch setting.DBType {
 	case "mysql":
 		urlStore = NewMySQLClient(configPath)

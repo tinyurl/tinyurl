@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/adolphlwq/tinyurl/config"
+	"github.com/adolphlwq/tinyurl/entity"
 )
 
 var (
@@ -15,7 +15,7 @@ var (
 )
 
 func newSqlDB(configPath string) *sql.DB {
-	setting := config.GetGlobalConfig(configPath)
+	setting := entity.GetGlobalConfig(configPath)
 	source := fmt.Sprintf("%s:%s@tcp(%s:%s)/", setting.DBUser, setting.DBPassword,
 		setting.DBHost, setting.DBPort)
 	db, err := sql.Open("mysql", source)
@@ -37,7 +37,7 @@ func TestNewMySQLClient(t *testing.T) {
 }
 
 func TestCreateDB(t *testing.T) {
-	setting := config.GetGlobalConfig(configPathMySQL)
+	setting := entity.GetGlobalConfig(configPathMySQL)
 	mysqlClient.CreateDB(setting)
 	db := newSqlDB(configPathMySQL)
 	defer db.Close()

@@ -1,7 +1,6 @@
 package entity
 
 import (
-	"github.com/adolphlwq/tinyurl/config"
 	"github.com/adolphlwq/tinyurl/uriuuid"
 )
 
@@ -17,5 +16,5 @@ type URLStore interface {
 type ServiceProvider struct {
 	StoreClient  URLStore
 	UriUUID      uriuuid.UriUUID
-	GlobalConfig *config.GlobalConfig
+	GlobalConfig *GlobalConfig
 }
