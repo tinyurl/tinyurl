@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/adolphlwq/tinyurl.svg?branch=master)](https://travis-ci.org/adolphlwq/tinyurl)  [![Go Report Card](https://goreportcard.com/badge/github.com/adolphlwq/tinyurl)](https://goreportcard.com/report/github.com/adolphlwq/tinyurl)  [![GoDoc](https://godoc.org/github.com/adolphlwq/tinyurl?status.svg)](https://godoc.org/github.com/adolphlwq/tinyurl)
 
 <p align="center">
-  <a href="http://tinyurl.adolphlwq.xyz" target="_blank">
+  <a href="https://tinyurl.adolphlwq.xyz" target="_blank">
     <img src="tinyurl.png" width="700px">
     <br>
     Live Demo
@@ -15,7 +15,7 @@
 ## Requisites
 - Golang(1.8+)
 - [Govendor](https://github.com/kardianos/govendor)
-- MySQL
+- MySQL/Sqlite3
 - make
 
 ## Quick Start
@@ -31,10 +31,28 @@ govendor sync
 ```
 make
 ```
-4. run binary
+4. change config in defult.properties
 ```
-./tinyurl -dbname tinyurl -user user -pass pass -dbport 2306
+# tinyurl dev config
+#app
+app.host=0.0.0.0
+app.port=8877
+app.domain=0.0.0.0:8877
+
+# db config
+db.type=sqlite3
+db.path=.
+db.host=
+db.port=
+db.name=tinyurldb
+db.user=
+db.password=
 ```
+5. run binary
+```
+./tinyurl -config defult.properties
+```
+6. open index.html in `frontend/` with broswer
 
 ## TODOs
 - [X] validate input url format
