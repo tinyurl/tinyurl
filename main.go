@@ -19,7 +19,7 @@ func main() {
 	app := &entity.ServiceProvider{
 		StoreClient:  urlStore,
 		UriUUID:      uriuuid.BasicURIUUID{},
-		GlobalConfig: entity.GetGlobalConfig(configPath),
+		GlobalConfig: entity.GetGlobalConfigByViper(configPath),
 	}
 
 	addr := net.JoinHostPort(app.GlobalConfig.Host, app.GlobalConfig.Port)

@@ -1,8 +1,13 @@
 package entity
 
 import (
+	"fmt"
+	"path"
+	"strings"
+
 	"github.com/Sirupsen/logrus"
 	"github.com/magiconair/properties"
+	"github.com/spf13/viper"
 )
 
 // ReadProps read and return props according configPath
@@ -31,6 +36,7 @@ type GlobalConfig struct {
 	DBPassword string
 }
 
+// GetGlobalConfig use properties
 func GetGlobalConfig(configPath string) *GlobalConfig {
 	props := ReadProps(configPath)
 
@@ -45,6 +51,32 @@ func GetGlobalConfig(configPath string) *GlobalConfig {
 		DBName:     props.GetString("db.name", ""),
 		DBUser:     props.GetString("db.user", ""),
 		DBPassword: props.GetString("db.password", ""),
+	}
+
+	return config
+}
+
+// GetGlobalConfigByViper use viper
+func GetGlobalConfigByViper(configPath string) *GlobalConfig {
+	baseConfigPath := path.Base(configPath)
+	configName := strings.Split(baseConfigPath, ".")[0]
+
+	viper.SetConfigName(configName)
+	if err := viper.ReadInConfig(); err != nil {
+		panic(fmt.Errorf("Fatal error config file: %s \n", err))
+	}
+
+	config := &GlobalConfig{
+		Host:       viper.GetString("app.host"),
+		Port:       viper.GetString("app.port"),
+		Domain:     viper.GetString("app.domain"),
+		DBType:     viper.GetString("db.type"),
+		DBPath:     viper.GetString("db.path"),
+		DBHost:     viper.GetString("db.host"),
+		DBPort:     viper.GetString("db.port"),
+		DBName:     viper.GetString("db.name"),
+		DBUser:     viper.GetString("db.user"),
+		DBPassword: viper.GetString("db.password"),
 	}
 
 	return config
