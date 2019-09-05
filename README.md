@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://tinyurl.adolphlwq.xyz" target="_blank">
-    <img src="tinyurl.png" width="700px">
+    <img src="assets/tinyurl.gif" width="700px">
     <br>
     Live Demo
   </a>
