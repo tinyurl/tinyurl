@@ -1,4 +1,5 @@
 vendor/*
 !vendor/vendor.json
 tinyurl
+tinyurldb
 .vscode
