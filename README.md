@@ -1,9 +1,9 @@
 # TinyURL
 
-[![Build Status](https://travis-ci.org/adolphlwq/tinyurl.svg?branch=master)](https://travis-ci.org/adolphlwq/tinyurl)  [![Go Report Card](https://goreportcard.com/badge/github.com/adolphlwq/tinyurl)](https://goreportcard.com/report/github.com/adolphlwq/tinyurl)  [![GoDoc](https://godoc.org/github.com/adolphlwq/tinyurl?status.svg)](https://godoc.org/github.com/adolphlwq/tinyurl)
+[![Build Status](https://travis-ci.org/adolphlwq/tinyurl.svg?branch=master)](https://travis-ci.org/adolphlwq/tinyurl)  [![Go Report Card](https://goreportcard.com/badge/github.com/tinyurl/tinyurl)](https://goreportcard.com/report/github.com/tinyurl/tinyurl)  [![GoDoc](https://godoc.org/github.com/tinyurl/tinyurl?status.svg)](https://godoc.org/github.com/tinyurl/tinyurl)
 
 <p align="center">
-  <a href="https://tinyurl.adolphlwq.xyz" target="_blank">
+  <a href="https://url.algcs.xyz" target="_blank">
     <img src="assets/tinyurl.gif" width="700px">
     <br>
     Live Demo
@@ -21,7 +21,7 @@
 ## Quick Start
 1. clone project to **GOPATH**
 ```
-git clone https://github.com/adolphlwq/tinyurl.git $GOPATH/src/github.com/adolphlwq/tinyurl
+git clone https://github.com/tinyurl/tinyurl.git $GOPATH/src/github.com/tinyurl/tinyurl
 ```
 2. sync golang packages
 ```
@@ -31,7 +31,7 @@ govendor sync
 ```
 make
 ```
-4. change config in defult.properties
+4. change config in default.properties
 ```
 # tinyurl dev config
 #app
@@ -50,7 +50,7 @@ db.password=
 ```
 5. run binary
 ```
-./tinyurl -config defult.properties
+./tinyurl -config default.properties
 ```
 6. open index.html in `frontend/` with broswer
 
