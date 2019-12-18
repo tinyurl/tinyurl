@@ -59,13 +59,10 @@ func GetGlobalConfig(configPath string) *GlobalConfig {
 // GetGlobalConfigByViper use viper
 func GetGlobalConfigByViper(configPath string) *GlobalConfig {
 	baseConfigPath := path.Base(configPath)
-	fmt.Println("configpath is ", configPath)
-	fmt.Println("base configpath is ", baseConfigPath)
-	// configName := strings.Split(baseConfigPath, ".")[0]
 	configName := strings.Split(baseConfigPath, ".")[0]
-	fmt.Println("configName is ", configName)
 
 	viper.SetConfigName(configName)
+	viper.AddConfigPath(".")
 	if err := viper.ReadInConfig(); err != nil {
 		panic(fmt.Errorf("Fatal error config file: %s \n", err))
 	}
