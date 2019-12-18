@@ -45,3 +45,4 @@ http-bm-fe:
 
 clean:
 	rm -f tinyurl
+	rm -f tinyurldb
