@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/adolphlwq/tinyurl/uriuuid"
+	"github.com/tinyurl/tinyurl/uriuuid"
 )
 
 type URLStore interface {

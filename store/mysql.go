@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/adolphlwq/tinyurl/entity"
 	"github.com/jinzhu/gorm"
+	"github.com/tinyurl/tinyurl/entity"
 )
 
 type MySQLClient struct {

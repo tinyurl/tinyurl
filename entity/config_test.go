@@ -8,7 +8,7 @@ import (
 )
 
 func TestReadProps(t *testing.T) {
-	configPath := "../defult.properties"
+	configPath := "../default.properties"
 	props := ReadProps(configPath)
 	assert.NotNil(t, props)
 

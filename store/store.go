@@ -1,7 +1,7 @@
 package store
 
 import (
-	"github.com/adolphlwq/tinyurl/entity"
+	"github.com/tinyurl/tinyurl/entity"
 	_ "github.com/go-sql-driver/mysql"
 )
 

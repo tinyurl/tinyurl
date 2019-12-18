@@ -10,15 +10,15 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/adolphlwq/tinyurl/entity"
-	"github.com/adolphlwq/tinyurl/store"
-	"github.com/adolphlwq/tinyurl/uriuuid"
+	"github.com/tinyurl/tinyurl/entity"
+	"github.com/tinyurl/tinyurl/store"
+	"github.com/tinyurl/tinyurl/uriuuid"
 )
 
 const (
 	TestPort          = "8877"
 	TestAddr          = "http://0.0.0.0:8877"
-	ConfigPathDefault = "../defult.properties"
+	ConfigPathDefault = "../default.properties"
 	TestOriginURL     = "http://test.origin.url"
 	TestShortPath     = "shortpath"
 )
@@ -30,7 +30,7 @@ var (
 )
 
 func init() {
-	os.Setenv("TINYURL_CONFIG_PATH", "../defult.properties")
+	os.Setenv("TINYURL_CONFIG_PATH", "../default.properties")
 	ConfigPath = os.Getenv("TINYURL_CONFIG_PATH")
 	if ConfigPath == "" {
 		ConfigPath = ConfigPathDefault

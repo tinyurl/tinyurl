@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/adolphlwq/tinyurl/entity"
+	"github.com/tinyurl/tinyurl/entity"
 	"github.com/gin-gonic/gin"
 )
 

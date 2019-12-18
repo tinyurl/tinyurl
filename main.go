@@ -4,10 +4,10 @@ import (
 	"flag"
 	"net"
 
-	"github.com/adolphlwq/tinyurl/entity"
-	"github.com/adolphlwq/tinyurl/server"
-	"github.com/adolphlwq/tinyurl/store"
-	"github.com/adolphlwq/tinyurl/uriuuid"
+	"github.com/tinyurl/tinyurl/entity"
+	"github.com/tinyurl/tinyurl/server"
+	"github.com/tinyurl/tinyurl/store"
+	"github.com/tinyurl/tinyurl/uriuuid"
 )
 
 func main() {
