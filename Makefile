@@ -7,7 +7,7 @@ all:
 build:
 	go build $(GO_BUILD_FLAGS) -o tinyurl
 build-image:
-	docker build -t adolphlwq/tinyurl .
+	docker build -t tinyurl/tinyurl .
 
 # run binary in dev mode
 dev:
