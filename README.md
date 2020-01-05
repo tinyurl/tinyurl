@@ -67,5 +67,7 @@ db.password=
 - [ ] list api
 
 ## Reference
+- [GitHub-YOURLS](https://github.com/YOURLS/YOURLS)
+- [知乎-短 URL 系统是怎么设计的？](https://www.zhihu.com/question/29270034)
 - [GitHub/Ourls](https://github.com/takashiki/Ourls)
 - [GitHub/uriuni](https://github.com/dchest/uniuri)
