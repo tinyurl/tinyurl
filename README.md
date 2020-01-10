@@ -61,10 +61,16 @@ db.password=
 - [X] use logrus replace golang log lib
 - [X] reserch [wrk](https://github.com/wg/wrk)
 - [X] add test case
-- [ ] dynamic adjust short path length (default is 4)
-- [ ] count each url parse time (high concurrent situation)
-- [ ] qrcode support
-- [ ] list api
+- [ ] Backend
+  - [ ] adjust short path generating algorithm
+  - [ ] API rate
+  - [ ] Swagger for api management
+  - [ ] Admin account?
+  - [ ] count each url parse time (high concurrent situation)
+  - [ ] custom short url
+- [ ] Frontend
+  - [ ] qrcode support
+
 
 ## Reference
 - [GitHub-YOURLS](https://github.com/YOURLS/YOURLS)
