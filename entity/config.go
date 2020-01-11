@@ -82,3 +82,9 @@ func GetGlobalConfigByViper(configPath string) *GlobalConfig {
 
 	return config
 }
+
+// db type
+const (
+	SQLITE3 = "sqlite3"
+	MYSQL   = "mysql"
+)

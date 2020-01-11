@@ -36,7 +36,7 @@ func init() {
 		ConfigPath = ConfigPathDefault
 	}
 
-	storeClient = store.GetURLStore(ConfigPath)
+	storeClient = store.NewGeneralDBClient(ConfigPath)
 	appService = &entity.ServiceProvider{
 		StoreClient:  storeClient,
 		UriUUID:      uriuuid.BasicURIUUID{},
