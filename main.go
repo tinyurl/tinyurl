@@ -15,7 +15,7 @@ func main() {
 	flag.StringVar(&configPath, "config", "default.properties", "config path")
 	flag.Parse()
 
-	urlStore := store.GetURLStore(configPath)
+	urlStore := store.NewGeneralDBClient(configPath)
 	app := &entity.ServiceProvider{
 		StoreClient:  urlStore,
 		UriUUID:      uriuuid.BasicURIUUID{},
