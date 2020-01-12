@@ -1,9 +1,5 @@
 package entity
 
-import (
-	"github.com/tinyurl/tinyurl/uriuuid"
-)
-
 type URLStore interface {
 	Create(url *URL)
 	Update(url *URL)
@@ -15,6 +11,6 @@ type URLStore interface {
 // ServiceProvider object hold service which server need
 type ServiceProvider struct {
 	StoreClient  URLStore
-	UriUUID      uriuuid.UriUUID
+	KeyGenerater KeyGenerater
 	GlobalConfig *GlobalConfig
 }

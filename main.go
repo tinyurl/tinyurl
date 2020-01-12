@@ -7,7 +7,6 @@ import (
 	"github.com/tinyurl/tinyurl/entity"
 	"github.com/tinyurl/tinyurl/server"
 	"github.com/tinyurl/tinyurl/store"
-	"github.com/tinyurl/tinyurl/uriuuid"
 )
 
 func main() {
@@ -16,10 +15,12 @@ func main() {
 	flag.Parse()
 
 	urlStore := store.NewGeneralDBClient(configPath)
+	globalConfig := entity.GetGlobalConfigByViper(configPath)
+	keyGenerater := entity.NewKeyGenerater(globalConfig.KeyAlgo)
 	app := &entity.ServiceProvider{
 		StoreClient:  urlStore,
-		UriUUID:      uriuuid.BasicURIUUID{},
-		GlobalConfig: entity.GetGlobalConfigByViper(configPath),
+		KeyGenerater: keyGenerater,
+		GlobalConfig: globalConfig,
 	}
 
 	addr := net.JoinHostPort(app.GlobalConfig.Host, app.GlobalConfig.Port)

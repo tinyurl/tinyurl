@@ -22,9 +22,11 @@ func ReadProps(configPath string) *properties.Properties {
 
 type GlobalConfig struct {
 	// app config
-	Host   string
-	Port   string
-	Domain string
+	Host               string
+	Port               string
+	Domain             string
+	KeyAlgo            string
+	KeyBasicDefaultLen int
 
 	// DB config
 	DBType     string
@@ -68,16 +70,18 @@ func GetGlobalConfigByViper(configPath string) *GlobalConfig {
 	}
 
 	config := &GlobalConfig{
-		Host:       viper.GetString("app.host"),
-		Port:       viper.GetString("app.port"),
-		Domain:     viper.GetString("app.domain"),
-		DBType:     viper.GetString("db.type"),
-		DBPath:     viper.GetString("db.path"),
-		DBHost:     viper.GetString("db.host"),
-		DBPort:     viper.GetString("db.port"),
-		DBName:     viper.GetString("db.name"),
-		DBUser:     viper.GetString("db.user"),
-		DBPassword: viper.GetString("db.password"),
+		Host:               viper.GetString("app.host"),
+		Port:               viper.GetString("app.port"),
+		Domain:             viper.GetString("app.domain"),
+		KeyAlgo:            viper.GetString("app.key.algorithm"),
+		KeyBasicDefaultLen: viper.GetInt("app.basic.default.len"),
+		DBType:             viper.GetString("db.type"),
+		DBPath:             viper.GetString("db.path"),
+		DBHost:             viper.GetString("db.host"),
+		DBPort:             viper.GetString("db.port"),
+		DBName:             viper.GetString("db.name"),
+		DBUser:             viper.GetString("db.user"),
+		DBPassword:         viper.GetString("db.password"),
 	}
 
 	return config
