@@ -52,6 +52,8 @@ func TestGetGlobalConfigByViper(t *testing.T) {
 
 	assert.Equal(t, c.Host, "0.0.0.0", "host should be 0.0.0.0")
 	assert.Equal(t, c.Port, "8877", "port should be 8877")
+	assert.Equal(t, c.KeyAlgo, "random", "KeyAlgo should be random")
+	assert.Equal(t, c.KeyBasicDefaultLen, 6, "KeyBasicDefaultLen should be 6")
 	assert.Equal(t, c.DBType, "sqlite3", "db type should be sqlite3")
 	assert.Equal(t, c.DBHost, "", "db host should be empty")
 	assert.Equal(t, c.DBPath, ".", "db path should be .")

@@ -11,7 +11,7 @@ build-image:
 
 # run binary in dev mode
 dev:
-	./tinyurl -config dev.properties
+	./tinyurl -config default.properties
 
 # run test cases
 test-mysql:

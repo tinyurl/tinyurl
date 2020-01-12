@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/tinyurl/tinyurl/entity"
 	"github.com/gin-gonic/gin"
+	"github.com/tinyurl/tinyurl/entity"
 )
 
 // ShortenURL shorten origin url and save to db
@@ -25,7 +25,7 @@ func ShortenURL(c *gin.Context, appService *entity.ServiceProvider) {
 	logrus.Infof("check if origin url %s has existed in db.\n", OriginURL)
 	url := appService.StoreClient.GetByOriginURL(OriginURL)
 	if url.OriginURL == "" {
-		url.ShortPath = appService.UriUUID.New()
+		url.ShortPath = appService.KeyGenerater.New()
 		url.CreateTime = time.Now().UTC()
 		url.OriginURL = OriginURL
 		appService.StoreClient.Create(url)

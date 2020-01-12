@@ -12,7 +12,6 @@ import (
 	"github.com/Sirupsen/logrus"
 	"github.com/tinyurl/tinyurl/entity"
 	"github.com/tinyurl/tinyurl/store"
-	"github.com/tinyurl/tinyurl/uriuuid"
 )
 
 const (
@@ -37,9 +36,10 @@ func init() {
 	}
 
 	storeClient = store.NewGeneralDBClient(ConfigPath)
+	globalConfig := entity.GetGlobalConfig(ConfigPath)
 	appService = &entity.ServiceProvider{
 		StoreClient:  storeClient,
-		UriUUID:      uriuuid.BasicURIUUID{},
+		KeyGenerater: entity.NewKeyGenerater(globalConfig.KeyAlgo),
 		GlobalConfig: entity.GetGlobalConfig(ConfigPath),
 	}
 }
