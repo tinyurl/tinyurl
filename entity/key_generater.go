@@ -13,7 +13,7 @@ var (
 const (
 	// BasicDefaultLen default random string length
 	BasicDefaultLen    = 8
-	SenderDefaultStart = 0
+	SenderDefaultIndex = 0
 
 	KeyAlgoRandom = "random"
 	KeyAlgoSender = "sender"
@@ -24,6 +24,8 @@ type KeyGenerater interface {
 	New() string
 	NewLen(int) string
 	NewLenChars(int, []byte) string
+	SetIndex(index int64)
+	GetIndex() int64
 }
 
 // NewKeyGenerater return KeyGenerater by algoritm
@@ -32,65 +34,71 @@ func NewKeyGenerater(algo string) KeyGenerater {
 	case KeyAlgoRandom:
 		return BasicGenerater{}
 	case KeyAlgoSender:
-		return DefaultSenderGenerater()
+		return DefaultSenderWorker()
 	default:
 		return BasicGenerater{}
 	}
 }
 
-type SenderGenerater struct {
-	Start int64
+// SenderManager for concurrent process
+// type SenderManager struct {
+// 	NumWorker int
+// 	Step      int
+// 	Config    map[int]*SenderWorker
+// }
+
+type SenderWorker struct {
+	// TODOs: adjust for multi db
+	ID    int64 `gorm:"primary_key"`
+	Index int64 `gorm:"type:int"`
 }
 
-// DefaultSenderGenerater return default SenderGenerater
-func DefaultSenderGenerater() *SenderGenerater {
-	return NewSenderGenerater(SenderDefaultStart)
+// DefaultSenderWorker return default SenderWorker
+func DefaultSenderWorker() *SenderWorker {
+	return NewSenderWorker(SenderDefaultIndex)
 }
 
-// NewSenderGenerater
-func NewSenderGenerater(start int64) *SenderGenerater {
-	sender := &SenderGenerater{
-		Start: start,
+// NewSenderWorker
+func NewSenderWorker(index int64) *SenderWorker {
+	sender := &SenderWorker{
+		Index: index,
 	}
 
 	return sender
 }
 
+func (sender *SenderWorker) GetIndex() int64 {
+	return sender.Index
+}
+
+// SetIndex
+func (sender *SenderWorker) SetIndex(index int64) {
+	sender.Index = index
+}
+
 // New new uri with default length and []byte
-func (sender *SenderGenerater) New() string {
-	// m.RLock()
-	// defer m.RUnlock()
-	key := GetByteByIndex(sender.Start, DefaultChars)
-	sender.Start++
+func (sender *SenderWorker) New() string {
+	key := GetByteByIndex(sender.Index, DefaultChars)
+	sender.Index++
 	return key
 }
 
 // New new key with default length and []byte
-func (sender *SenderGenerater) NewLen(length int) string {
-	// m.RLock()
-	// defer m.RUnlock()
-	key := GetByteByIndex(sender.Start, DefaultChars)
-	sender.Start++
-	return key
+func (sender *SenderWorker) NewLen(length int) string {
+	// this function just for interface
+	return ""
 }
 
-// New new key with default length and []byte
-func (sender *SenderGenerater) NewLenDefaultChars(length int, DefaultChars []byte) string {
-	// m.RLock()
-	// defer m.RUnlock()
-	key := GetByteByIndex(sender.Start, DefaultChars)
-	sender.Start++
-	return key
-}
-
-func (sender *SenderGenerater) NewLenChars(length int, chars []byte) string {
-	key := GetByteByIndex(sender.Start, DefaultChars)
-	sender.Start++
-	return key
+func (sender *SenderWorker) NewLenChars(length int, chars []byte) string {
+	// this function just for interface
+	return ""
 }
 
 func GetByteByIndex(index int64, DefaultChars []byte) string {
 	baseLen := int64(len(DefaultChars))
+	if index == 0 {
+		return string(DefaultChars[0])
+	}
 	var container []byte
 	for ; index != 0; index = index / baseLen {
 		m := index % baseLen
@@ -102,6 +110,14 @@ func GetByteByIndex(index int64, DefaultChars []byte) string {
 
 type BasicGenerater struct {
 	KeyLen int
+}
+
+func (basic BasicGenerater) GetIndex() int64 {
+	return 0
+}
+
+func (basic BasicGenerater) SetIndex(index int64) {
+
 }
 
 // New new BasicGenerater with default length and []byte

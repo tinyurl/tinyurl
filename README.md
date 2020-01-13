@@ -62,6 +62,7 @@ db.password=
 - [X] reserch [wrk](https://github.com/wg/wrk)
 - [X] add test case
 - [ ] Backend
+  - [ ] data type support multi database(index in sender)
   - [ ] adjust short path generating algorithm
   - [ ] API rate
   - [ ] Swagger for api management

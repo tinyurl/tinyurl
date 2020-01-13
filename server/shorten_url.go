@@ -25,7 +25,17 @@ func ShortenURL(c *gin.Context, appService *entity.ServiceProvider) {
 	logrus.Infof("check if origin url %s has existed in db.\n", OriginURL)
 	url := appService.StoreClient.GetByOriginURL(OriginURL)
 	if url.OriginURL == "" {
-		url.ShortPath = appService.KeyGenerater.New()
+		switch appService.GlobalConfig.KeyAlgo {
+		case entity.KeyAlgoRandom:
+			url.ShortPath = appService.KeyGenerater.New()
+		case entity.KeyAlgoSender:
+			url.ShortPath = appService.KeyGenerater.New()
+			sender := entity.SenderWorker{
+				Index: appService.KeyGenerater.GetIndex(),
+			}
+			logrus.Infof("sender index is %d\n", sender.Index)
+			appService.StoreClient.UpdateSenderWorker(&sender)
+		}
 		url.CreateTime = time.Now().UTC()
 		url.OriginURL = OriginURL
 		appService.StoreClient.Create(url)

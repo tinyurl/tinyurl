@@ -14,11 +14,19 @@ func main() {
 	flag.StringVar(&configPath, "config", "default.properties", "config path")
 	flag.Parse()
 
-	urlStore := store.NewGeneralDBClient(configPath)
+	generalStore := store.NewGeneralDBClient(configPath)
 	globalConfig := entity.GetGlobalConfigByViper(configPath)
 	keyGenerater := entity.NewKeyGenerater(globalConfig.KeyAlgo)
+
+	switch globalConfig.KeyAlgo {
+	case entity.KeyAlgoSender:
+		sender := generalStore.GetSenderWorker()
+		if sender.Index != 0 {
+			keyGenerater.SetIndex(sender.Index)
+		}
+	}
 	app := &entity.ServiceProvider{
-		StoreClient:  urlStore,
+		StoreClient:  generalStore,
 		KeyGenerater: keyGenerater,
 		GlobalConfig: globalConfig,
 	}

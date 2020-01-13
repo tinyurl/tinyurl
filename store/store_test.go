@@ -47,3 +47,16 @@ func TestDropDatabase(t *testing.T) {
 	NewGeneralDBClient(configPathMySQL).DropDatabase()
 	NewGeneralDBClient(configPathSqlite3).DropDatabase()
 }
+
+func TestUpdateSenderWorker(t *testing.T) {
+	// this process will create init sender with index=0
+	client := NewGeneralDBClient(configPathSqlite3)
+	sender := client.GetSenderWorker()
+
+	sender.Index = 7
+	client.UpdateSenderWorker(sender)
+	ret := client.GetSenderWorker()
+
+	assert.Equal(t, sender.Index, ret.Index, "index should be %d, but get %d", sender.Index, ret.Index)
+	client.DropDatabase()
+}
