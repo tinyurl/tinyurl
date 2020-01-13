@@ -14,7 +14,7 @@ import (
 
 // GeneralDBClient support sqlite3, mysql and so on...
 type GeneralDBClient struct {
-	db         *gorm.DB
+	GormDB     *gorm.DB
 	DBName     string
 	DBType     string
 	configPath string
@@ -40,11 +40,13 @@ func NewGeneralDBClient(configPath string) *GeneralDBClient {
 		logrus.Fatalf("open connection to mysql use gorm error: %s", err)
 	}
 
-	gclient.db = db
+	gclient.GormDB = db
 	gclient.DBName = setting.DBName
 	gclient.DBType = setting.DBType
 	gclient.configPath = configPath
-	gclient.db.AutoMigrate(&entity.URL{})
+	gclient.GormDB.AutoMigrate(&entity.URL{})
+	gclient.GormDB.AutoMigrate(&entity.SenderWorker{})
+	gclient.GormDB.FirstOrCreate(&entity.SenderWorker{}, entity.SenderWorker{ID: 1, Index: 0})
 
 	return gclient
 }
@@ -83,26 +85,46 @@ func getDBSource(setting *entity.GlobalConfig) string {
 	return source
 }
 
+// CRUD for URL
+
 func (gclient *GeneralDBClient) Create(url *entity.URL) {
-	gclient.db.Create(url)
+	gclient.GormDB.Create(url)
 }
 
 func (gclient *GeneralDBClient) Update(url *entity.URL) {
-	gclient.db.Save(url)
+	gclient.GormDB.Save(url)
 }
 
 func (gclient *GeneralDBClient) GetByOriginURL(originURL string) *entity.URL {
 	var url entity.URL
-	gclient.db.Where("origin_url = ?", originURL).First(&url)
+	gclient.GormDB.Where("origin_url = ?", originURL).First(&url)
 
 	return &url
 }
 
 func (gclient *GeneralDBClient) GetByShortPath(shortPath string) *entity.URL {
 	var url entity.URL
-	gclient.db.Where("short_path = ?", shortPath).First(&url)
+	gclient.GormDB.Where("short_path = ?", shortPath).First(&url)
 
 	return &url
+}
+
+// CRUD for SenderWorker
+
+func (gclient *GeneralDBClient) UpdateSenderWorker(sender *entity.SenderWorker) {
+	// gclient.GormDB.Update(sender)
+	gclient.GormDB.Model(sender).Update("index", sender.Index)
+}
+
+func (gclient *GeneralDBClient) SaveSenderWorker(sender *entity.SenderWorker) {
+	gclient.GormDB.Save(sender)
+}
+
+func (gclient *GeneralDBClient) GetSenderWorker() *entity.SenderWorker {
+	sender := entity.SenderWorker{}
+	gclient.GormDB.First(&sender)
+
+	return &sender
 }
 
 // DropDatabase drop self hold database
@@ -117,7 +139,7 @@ func (gclient *GeneralDBClient) DropDatabase() {
 		}
 	case entity.MYSQL:
 		sql := fmt.Sprintf("DROP DATABASE IF EXISTS %s;", gclient.DBName)
-		db := gclient.db.DB()
+		db := gclient.GormDB.DB()
 
 		_, err := db.Exec(sql)
 		if err != nil {

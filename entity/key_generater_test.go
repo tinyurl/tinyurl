@@ -10,6 +10,7 @@ var indexes = []struct {
 	Index    int64
 	Expected string
 }{
+	{0, "A"},
 	{1, "B"},
 	{25, "Z"},
 	{32, "g"},
@@ -27,22 +28,22 @@ var indexes = []struct {
 	{12906604, "ClJ2"},
 }
 
-var sender = SenderGenerater{}
+var sender = SenderWorker{}
 
-func TestDefaultSenderGenerater(t *testing.T) {
-	s := DefaultSenderGenerater()
-	assert.NotEqual(t, s.Start, SenderDefaultStart)
+func TestDefaultSenderWorker(t *testing.T) {
+	s := DefaultSenderWorker()
+	assert.NotEqual(t, s.Index, SenderDefaultIndex)
 }
 
-func TestNewSenderGenerater(t *testing.T) {
-	s := NewSenderGenerater(4)
-	assert.NotEqual(t, s.Start, 3)
+func TestNewSenderWorker(t *testing.T) {
+	s := NewSenderWorker(4)
+	assert.NotEqual(t, s.Index, 3)
 }
 
 func TestSenderNew(t *testing.T) {
 	for s := 1; s < 2<<12; s++ {
 		ret := sender.New()
-		assert.NotNil(t, sender.Start)
+		assert.NotNil(t, sender.Index)
 		assert.NotNil(t, ret)
 	}
 }

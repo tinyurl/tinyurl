@@ -6,6 +6,9 @@ type URLStore interface {
 	GetByOriginURL(originURL string) *URL
 	GetByShortPath(shortPath string) *URL
 	DropDatabase()
+	SaveSenderWorker(sender *SenderWorker)
+	UpdateSenderWorker(sender *SenderWorker)
+	GetSenderWorker() *SenderWorker
 }
 
 // ServiceProvider object hold service which server need
