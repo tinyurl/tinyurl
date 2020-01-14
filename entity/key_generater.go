@@ -3,6 +3,7 @@ package entity
 import (
 	"crypto/rand"
 	"log"
+	"sync"
 )
 
 var (
@@ -49,8 +50,9 @@ func NewKeyGenerater(algo string) KeyGenerater {
 
 type SenderWorker struct {
 	// TODOs: adjust for multi db
-	ID    int64 `gorm:"primary_key"`
-	Index int64 `gorm:"type:int"`
+	ID    int64      `gorm:"primary_key"`
+	Index int64      `gorm:"type:int"`
+	m     sync.Mutex `gorm:"-"` // ignore
 }
 
 // DefaultSenderWorker return default SenderWorker
@@ -62,6 +64,7 @@ func DefaultSenderWorker() *SenderWorker {
 func NewSenderWorker(index int64) *SenderWorker {
 	sender := &SenderWorker{
 		Index: index,
+		m:     sync.Mutex{},
 	}
 
 	return sender
@@ -78,6 +81,8 @@ func (sender *SenderWorker) SetIndex(index int64) {
 
 // New new uri with default length and []byte
 func (sender *SenderWorker) New() string {
+	sender.m.Lock()
+	defer sender.m.Unlock()
 	key := GetByteByIndex(sender.Index, DefaultChars)
 	sender.Index++
 	return key
