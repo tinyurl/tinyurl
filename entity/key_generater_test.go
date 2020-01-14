@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"sync"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -46,6 +47,23 @@ func TestSenderNew(t *testing.T) {
 		assert.NotNil(t, sender.Index)
 		assert.NotNil(t, ret)
 	}
+}
+
+func TestSyncSenderNew(t *testing.T) {
+	s := NewSenderWorker(0)
+	var i, n int64
+	n = 1000
+	wg := sync.WaitGroup{}
+	for i = 0; i < n; i++ {
+		wg.Add(1)
+		go func() {
+			s.New()
+			wg.Done()
+		}()
+	}
+	wg.Wait()
+
+	assert.Equal(t, n, s.Index, "index should be %d, but get %d \n", n, s.Index)
 }
 
 func TestGetByteByIndex(t *testing.T) {
