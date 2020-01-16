@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"math"
 	"sync"
 	"testing"
 
@@ -71,6 +72,24 @@ func TestGetByteByIndex(t *testing.T) {
 		ret := GetByteByIndex(I.Index, DefaultChars)
 		assert.Equal(t, ret, I.Expected)
 	}
+}
+
+func TestSenderDefaultLen(t *testing.T) {
+	len1 := 2
+	len2 := 3
+	index1 := int64(math.Pow(float64(62), float64(len1-1)))
+	index2 := int64(math.Pow(float64(62), float64(len2-1)))
+	sender1 := NewSenderWorker(index1)
+	sender2 := NewSenderWorker(index2)
+
+	key1 := sender1.New()
+	key2 := sender2.New()
+
+	assert.Equal(t, key1, "AB")
+	assert.Equal(t, key2, "AAB")
+
+	// fmt.Printf("key1 %s index1 %d, key2 %s index2 %d\n",
+	// 	key1, index1, key2, index2)
 }
 
 var basicGenerater = BasicGenerater{}

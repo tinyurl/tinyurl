@@ -15,6 +15,7 @@ const (
 	// BasicDefaultLen default random string length
 	BasicDefaultLen    = 8
 	SenderDefaultIndex = 0
+	DefaultCharsLen    = 62
 
 	KeyAlgoRandom = "random"
 	KeyAlgoSender = "sender"

@@ -1,6 +1,6 @@
 # TinyURL
 
-[![Build Status](https://travis-ci.org/tinyurl/tinyurl.svg?branch=master)](https://travis-ci.org/tinyurl/tinyurl)  [![Go Report Card](https://goreportcard.com/badge/github.com/tinyurl/tinyurl)](https://goreportcard.com/report/github.com/tinyurl/tinyurl)  [![GoDoc](https://godoc.org/github.com/tinyurl/tinyurl?status.svg)](https://godoc.org/github.com/tinyurl/tinyurl)
+[![Build Status](https://travis-ci.com/tinyurl/tinyurl.svg?branch=master)](https://travis-ci.com/tinyurl/tinyurl)  [![Go Report Card](https://goreportcard.com/badge/github.com/tinyurl/tinyurl)](https://goreportcard.com/report/github.com/tinyurl/tinyurl)  [![GoDoc](https://godoc.org/github.com/tinyurl/tinyurl?status.svg)](https://godoc.org/github.com/tinyurl/tinyurl)
 
 <p align="center">
   <a href="https://url.algcs.xyz" target="_blank">

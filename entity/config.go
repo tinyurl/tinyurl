@@ -22,11 +22,12 @@ func ReadProps(configPath string) *properties.Properties {
 
 type GlobalConfig struct {
 	// app config
-	Host               string
-	Port               string
-	Domain             string
-	KeyAlgo            string
-	KeyBasicDefaultLen int
+	Host                string
+	Port                string
+	Domain              string
+	KeyAlgo             string
+	KeyBasicDefaultLen  int
+	KeySenderDefaultLen int
 
 	// DB config
 	DBType     string
@@ -70,18 +71,33 @@ func GetGlobalConfigByViper(configPath string) *GlobalConfig {
 	}
 
 	config := &GlobalConfig{
-		Host:               viper.GetString("app.host"),
-		Port:               viper.GetString("app.port"),
-		Domain:             viper.GetString("app.domain"),
-		KeyAlgo:            viper.GetString("app.key.algorithm"),
-		KeyBasicDefaultLen: viper.GetInt("app.basic.default.len"),
-		DBType:             viper.GetString("db.type"),
-		DBPath:             viper.GetString("db.path"),
-		DBHost:             viper.GetString("db.host"),
-		DBPort:             viper.GetString("db.port"),
-		DBName:             viper.GetString("db.name"),
-		DBUser:             viper.GetString("db.user"),
-		DBPassword:         viper.GetString("db.password"),
+		Host:                viper.GetString("app.host"),
+		Port:                viper.GetString("app.port"),
+		Domain:              viper.GetString("app.domain"),
+		KeyAlgo:             viper.GetString("app.key.algorithm"),
+		KeyBasicDefaultLen:  viper.GetInt("app.basic.default.len"),
+		KeySenderDefaultLen: viper.GetInt("app.sender.default.len"),
+		DBType:              viper.GetString("db.type"),
+		DBPath:              viper.GetString("db.path"),
+		DBHost:              viper.GetString("db.host"),
+		DBPort:              viper.GetString("db.port"),
+		DBName:              viper.GetString("db.name"),
+		DBUser:              viper.GetString("db.user"),
+		DBPassword:          viper.GetString("db.password"),
+	}
+
+	// validate key generater algorithm and config
+	switch config.KeyAlgo {
+	case KeyAlgoRandom:
+		if config.KeyBasicDefaultLen <= 0 {
+			panic(fmt.Errorf("key algo is %s, default len is %d, should >= 0",
+				config.KeyAlgo, config.KeyBasicDefaultLen))
+		}
+	case KeyAlgoSender:
+		if config.KeySenderDefaultLen <= 0 {
+			panic(fmt.Errorf("key algo is %s, default len is %d, should >= 0",
+				config.KeyAlgo, config.KeySenderDefaultLen))
+		}
 	}
 
 	return config

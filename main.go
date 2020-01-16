@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"math"
 	"net"
 
 	"github.com/tinyurl/tinyurl/entity"
@@ -23,6 +24,12 @@ func main() {
 		sender := generalStore.GetSenderWorker()
 		if sender.Index != 0 {
 			keyGenerater.SetIndex(sender.Index)
+		} else {
+			// init start
+			var index int64
+			index = int64(math.Pow(entity.DefaultCharsLen, float64(globalConfig.KeySenderDefaultLen-1)))
+			keyGenerater.SetIndex(index)
+			generalStore.UpdateSenderWorker(sender)
 		}
 	}
 	app := &entity.ServiceProvider{
