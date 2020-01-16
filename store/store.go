@@ -20,6 +20,7 @@ type GeneralDBClient struct {
 	configPath string
 }
 
+// NewGeneralDBClient
 func NewGeneralDBClient(configPath string) *GeneralDBClient {
 	setting := entity.GetGlobalConfig(configPath)
 	switch setting.DBType {
