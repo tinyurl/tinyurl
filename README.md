@@ -1,4 +1,4 @@
-# TinyURL
+# TinyURL - Make Personal URL Shortening Service Easy
 
 [![Build Status](https://travis-ci.com/tinyurl/tinyurl.svg?branch=master)](https://travis-ci.com/tinyurl/tinyurl)  [![Go Report Card](https://goreportcard.com/badge/github.com/tinyurl/tinyurl)](https://goreportcard.com/report/github.com/tinyurl/tinyurl)  [![GoDoc](https://godoc.org/github.com/tinyurl/tinyurl?status.svg)](https://godoc.org/github.com/tinyurl/tinyurl)
 
@@ -62,16 +62,15 @@ db.password=
 - [X] reserch [wrk](https://github.com/wg/wrk)
 - [X] add test case
 - [ ] Backend
-  - [ ] data type support multi database(index in sender)
-  - [ ] adjust short path generating algorithm
+  - [X] data type support multi database(index in sender)
+  - [X] adjust short path generating algorithm
+  - [ ] custom short url
   - [ ] API rate
   - [ ] Swagger for api management
   - [ ] Admin account?
   - [ ] count each url parse time (high concurrent situation)
-  - [ ] custom short url
 - [ ] Frontend
   - [ ] qrcode support
-
 
 ## Reference
 - [GitHub-YOURLS](https://github.com/YOURLS/YOURLS)
