@@ -5,11 +5,22 @@ import (
 	"math"
 	"net"
 
+	_ "github.com/tinyurl/tinyurl/docs"
 	"github.com/tinyurl/tinyurl/entity"
 	"github.com/tinyurl/tinyurl/server"
 	"github.com/tinyurl/tinyurl/store"
 )
 
+// @title TinyURL Swagger API Docs
+// @version 1.0
+// @description TinyURL API Document
+
+// @contact.name AdolphLWQ
+// @contact.url https://git.io/tinyurl
+// @contact.email kenan3015@gmail.com
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 func main() {
 	var configPath string
 	flag.StringVar(&configPath, "config", "default.properties", "config path")

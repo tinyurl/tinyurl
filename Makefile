@@ -2,6 +2,7 @@ GO_BUILD_FLAGS=
 PKGS=$(shell go list ./... | grep -E -v "(vendor)")
 
 all:
+	swag init
 	go build $(GO_BUILD_FLAGS) -o tinyurl
 
 build:
