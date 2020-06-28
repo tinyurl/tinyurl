@@ -53,6 +53,7 @@ db.password=
 ./tinyurl -config default.properties
 ```
 6. open index.html in `frontend/` with broswer
+7. default Swagger API url is `http://0.0.0.0:8877/swagger/index.html`
 
 ## TODOs
 - [X] validate input url format
@@ -64,9 +65,9 @@ db.password=
 - [ ] Backend
   - [X] data type support multi database(index in sender)
   - [X] adjust short path generating algorithm
+  - [X] Swagger for api management
   - [ ] custom short url
   - [ ] API rate
-  - [ ] Swagger for api management
   - [ ] Admin account?
   - [ ] count each url parse time (high concurrent situation)
 - [ ] Frontend

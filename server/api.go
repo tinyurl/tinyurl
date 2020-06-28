@@ -1,12 +1,15 @@
 package server
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/tinyurl/tinyurl/entity"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/tinyurl/tinyurl/entity"
 )
 
 // BuildEngine return gin.Engine with route
@@ -25,9 +28,13 @@ func BuildEngine(appService *entity.ServiceProvider) *gin.Engine {
 		MaxAge: 12 * time.Hour,
 	}))
 
-	router.GET("/n/:shortpath", WrapeService(appService, ParseURL))
 	router.GET("/health", HealthCheck)
+	router.GET("/n/:shortpath", WrapeService(appService, ParseURL))
 	router.POST("/api/v1/shorten", WrapeService(appService, ShortenURL))
+
+	swaggerURL := ginSwagger.URL(appService.GlobalConfig.SwaggerURL)
+	fmt.Printf("lwq %s \n", appService.GlobalConfig.SwaggerURL)
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, swaggerURL))
 
 	return router
 }

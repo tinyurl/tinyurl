@@ -1,0 +1,35 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "TinyURL API Document",
+        "title": "TinyURL Swagger API Docs",
+        "contact": {
+            "name": "AdolphLWQ",
+            "url": "https://git.io/tinyurl",
+            "email": "kenan3015@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/health": {
+            "get": {
+                "consumes": [
+                    "application/x-json-stream"
+                ],
+                "summary": "健康检查",
+                "responses": {
+                    "200": {
+                        "description": "health",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

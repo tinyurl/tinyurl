@@ -25,6 +25,7 @@ type GlobalConfig struct {
 	Host                string
 	Port                string
 	Domain              string
+	SwaggerURL          string
 	KeyAlgo             string
 	KeyBasicDefaultLen  int
 	KeySenderDefaultLen int
@@ -42,11 +43,15 @@ type GlobalConfig struct {
 // GetGlobalConfig use properties
 func GetGlobalConfig(configPath string) *GlobalConfig {
 	props := ReadProps(configPath)
+	host := props.MustGet("app.host")
+	port := props.MustGet("app.port")
+	swaggerURL := fmt.Sprintf("%s:%s/swagger/doc.json", host, port)
 
 	config := &GlobalConfig{
-		Host:       props.MustGet("app.host"),
-		Port:       props.MustGet("app.port"),
+		Host:       host,
+		Port:       port,
 		Domain:     props.MustGet("app.domain"),
+		SwaggerURL: swaggerURL,
 		DBType:     props.MustGet("db.type"),
 		DBPath:     props.GetString("db.path", ""),
 		DBHost:     props.GetString("db.host", ""),
@@ -70,10 +75,15 @@ func GetGlobalConfigByViper(configPath string) *GlobalConfig {
 		panic(fmt.Errorf("Fatal error config file: %s \n", err))
 	}
 
+	host := viper.GetString("app.host")
+	port := viper.GetString("app.port")
+	swaggerURL := fmt.Sprintf("%s:%s/swagger/doc.json", host, port)
+
 	config := &GlobalConfig{
-		Host:                viper.GetString("app.host"),
-		Port:                viper.GetString("app.port"),
+		Host:                host,
+		Port:                port,
 		Domain:              viper.GetString("app.domain"),
+		SwaggerURL:          swaggerURL,
 		KeyAlgo:             viper.GetString("app.key.algorithm"),
 		KeyBasicDefaultLen:  viper.GetInt("app.basic.default.len"),
 		KeySenderDefaultLen: viper.GetInt("app.sender.default.len"),
