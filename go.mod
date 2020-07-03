@@ -1,0 +1,50 @@
+module github.com/tinyurl/tinyurl
+
+go 1.13
+
+require (
+	github.com/KyleBanks/depth v1.2.2-0.20190719145526-b7f67b6d8d5f
+	github.com/PuerkitoBio/purell v1.1.1
+	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
+	github.com/Sirupsen/logrus v1.0.1-0.20170706134407-59d0ca41e5fa
+	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
+	github.com/davecgh/go-spew v1.1.1
+	github.com/fsnotify/fsnotify v1.4.8-0.20190312181446-1485a34d5d57
+	github.com/gin-contrib/cors v0.0.0-20170708080947-567de1916927
+	github.com/gin-contrib/sse v0.1.0
+	github.com/gin-gonic/gin v1.4.0
+	github.com/go-openapi/jsonpointer v0.19.3
+	github.com/go-openapi/jsonreference v0.19.4-0.20191224164422-1f9748e5f45e
+	github.com/go-openapi/spec v0.19.9-0.20200527161033-f387d8f36956
+	github.com/go-openapi/swag v0.19.9
+	github.com/go-sql-driver/mysql v1.4.1
+	github.com/golang/protobuf v1.3.1
+	github.com/hashicorp/hcl v1.0.1-0.20190611123218-cf7d376da96d
+	github.com/jinzhu/gorm v1.9.10
+	github.com/jinzhu/inflection v1.0.0
+	github.com/josharian/intern v1.0.1-0.20191216181125-a140101e2404
+	github.com/magiconair/properties v1.8.1
+	github.com/mailru/easyjson v0.7.2-0.20200524104011-8ba3c7bdceed
+	github.com/mattn/go-isatty v0.0.8
+	github.com/mattn/go-sqlite3 v1.11.1-0.20190716071503-d6f416f91c46
+	github.com/mitchellh/mapstructure v1.1.2
+	github.com/pelletier/go-toml v1.4.1-0.20190827035702-3ded2e09ee1b
+	github.com/pmezard/go-difflib v1.0.0
+	github.com/spf13/afero v1.2.2
+	github.com/spf13/cast v1.3.1-0.20190531093228-c01685bb8421
+	github.com/spf13/jwalterweatherman v1.1.0
+	github.com/spf13/pflag v1.0.4-0.20190814001055-972238283c06
+	github.com/spf13/viper v1.4.1-0.20190829134225-bd1db6bb8c59
+	github.com/stretchr/testify v1.4.0
+	github.com/subosito/gotenv v1.2.1-0.20190813024733-422ef8095f11
+	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14
+	github.com/swaggo/gin-swagger v1.2.1-0.20200509170332-bbeaf5b73c89
+	github.com/swaggo/swag v1.6.8-0.20200618154853-940d07268e91
+	github.com/ugorji/go v1.1.5-pre
+	golang.org/x/net v0.0.0-20200625001655-4c5254603344
+	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd
+	golang.org/x/text v0.3.3
+	golang.org/x/tools v0.0.0-20200626171337-aa94e735be7f
+	gopkg.in/go-playground/validator.v8 v8.18.2
+	gopkg.in/yaml.v2 v2.2.4
+)
