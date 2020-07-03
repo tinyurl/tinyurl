@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/tinyurl/tinyurl.svg?branch=master)](https://travis-ci.com/tinyurl/tinyurl)  [![Go Report Card](https://goreportcard.com/badge/github.com/tinyurl/tinyurl)](https://goreportcard.com/report/github.com/tinyurl/tinyurl)  [![GoDoc](https://godoc.org/github.com/tinyurl/tinyurl?status.svg)](https://godoc.org/github.com/tinyurl/tinyurl)
 
 <p align="center">
-  <a href="https://url.algcs.xyz" target="_blank">
+  <a href="https://adolphlwq.xyz" target="_blank">
     <img src="assets/tinyurl.gif" width="700px">
     <br>
     Live Demo
@@ -13,8 +13,7 @@
 <p align="center">a url shorten web service written by Golang, Vue and Gin.</p>
 
 ## Requisites
-- Golang(1.8+)
-- [Govendor](https://github.com/kardianos/govendor)
+- Golang(1.12+)
 - MySQL/Sqlite3
 - make
 
@@ -23,15 +22,11 @@
 ```
 git clone https://github.com/tinyurl/tinyurl.git $GOPATH/src/github.com/tinyurl/tinyurl
 ```
-2. sync golang packages
-```
-govendor sync
-```
-3. build binary
+2. build binary
 ```
 make
 ```
-4. change config in default.properties
+3. change config in default.properties
 ```
 # tinyurl dev config
 #app
@@ -48,12 +43,12 @@ db.name=tinyurldb
 db.user=
 db.password=
 ```
-5. run binary
+4. run binary
 ```
 ./tinyurl -config default.properties
 ```
-6. open index.html in `frontend/` with broswer
-7. default Swagger API url is `http://0.0.0.0:8877/swagger/index.html`
+5. open index.html in `frontend/` with broswer
+6. default Swagger API url is `http://0.0.0.0:8877/swagger/index.html`
 
 ## TODOs
 - [X] validate input url format
