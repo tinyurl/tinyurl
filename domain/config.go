@@ -1,12 +1,12 @@
-package entity
+package domain
 
 import (
 	"fmt"
 	"path"
 	"strings"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/magiconair/properties"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 

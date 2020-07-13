@@ -5,13 +5,13 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"
-	"github.com/tinyurl/tinyurl/entity"
+	"github.com/sirupsen/logrus"
+	"github.com/tinyurl/tinyurl/domain"
 )
 
 // ShortenURL shorten origin url and save to db
-func ShortenURL(c *gin.Context, appService *entity.ServiceProvider) {
+func ShortenURL(c *gin.Context, appService *domain.ServiceProvider) {
 	OriginURL := c.PostForm("origin_url")
 
 	if OriginURL == "" {
@@ -26,11 +26,11 @@ func ShortenURL(c *gin.Context, appService *entity.ServiceProvider) {
 	url := appService.StoreClient.GetByOriginURL(OriginURL)
 	if url.OriginURL == "" {
 		switch appService.GlobalConfig.KeyAlgo {
-		case entity.KeyAlgoRandom:
+		case domain.KeyAlgoRandom:
 			url.ShortPath = appService.KeyGenerater.New()
-		case entity.KeyAlgoSender:
+		case domain.KeyAlgoSender:
 			url.ShortPath = appService.KeyGenerater.New()
-			sender := entity.SenderWorker{
+			sender := domain.SenderWorker{
 				Index: appService.KeyGenerater.GetIndex(),
 			}
 			logrus.Infof("sender index is %d\n", sender.Index)

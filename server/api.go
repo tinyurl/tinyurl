@@ -4,16 +4,16 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"github.com/tinyurl/tinyurl/entity"
+	"github.com/tinyurl/tinyurl/domain"
 )
 
 // BuildEngine return gin.Engine with route
-func BuildEngine(appService *entity.ServiceProvider) *gin.Engine {
+func BuildEngine(appService *domain.ServiceProvider) *gin.Engine {
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
 		AllowMethods: []string{"GET", "POST"},
@@ -40,14 +40,14 @@ func BuildEngine(appService *entity.ServiceProvider) *gin.Engine {
 }
 
 // Start start server
-func Start(addr string, appService *entity.ServiceProvider) {
+func Start(addr string, appService *domain.ServiceProvider) {
 	router := BuildEngine(appService)
 	router.Run(addr)
 }
 
-type RequestHandler func(*gin.Context, *entity.ServiceProvider)
+type RequestHandler func(*gin.Context, *domain.ServiceProvider)
 
-func WrapeService(appService *entity.ServiceProvider, handler RequestHandler) gin.HandlerFunc {
+func WrapeService(appService *domain.ServiceProvider, handler RequestHandler) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		handler(c, appService)
 	}

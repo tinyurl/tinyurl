@@ -3,13 +3,13 @@ package server
 import (
 	"net/http"
 
-	"github.com/Sirupsen/logrus"
-	"github.com/tinyurl/tinyurl/entity"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
+	"github.com/tinyurl/tinyurl/domain"
 )
 
 // ParseURL parse shorten path and return source url
-func ParseURL(c *gin.Context, appService *entity.ServiceProvider) {
+func ParseURL(c *gin.Context, appService *domain.ServiceProvider) {
 	shortPath := c.Param("shortpath")
 	if shortPath == "" {
 		logrus.Warnf("shortpath is nil, return default home path.\n")

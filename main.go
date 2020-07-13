@@ -6,7 +6,7 @@ import (
 	"net"
 
 	_ "github.com/tinyurl/tinyurl/docs"
-	"github.com/tinyurl/tinyurl/entity"
+	"github.com/tinyurl/tinyurl/domain"
 	"github.com/tinyurl/tinyurl/server"
 	"github.com/tinyurl/tinyurl/store"
 )
@@ -27,23 +27,23 @@ func main() {
 	flag.Parse()
 
 	generalStore := store.NewGeneralDBClient(configPath)
-	globalConfig := entity.GetGlobalConfigByViper(configPath)
-	keyGenerater := entity.NewKeyGenerater(globalConfig.KeyAlgo)
+	globalConfig := domain.GetGlobalConfigByViper(configPath)
+	keyGenerater := domain.NewKeyGenerater(globalConfig.KeyAlgo)
 
 	switch globalConfig.KeyAlgo {
-	case entity.KeyAlgoSender:
+	case domain.KeyAlgoSender:
 		sender := generalStore.GetSenderWorker()
 		if sender.Index != 0 {
 			keyGenerater.SetIndex(sender.Index)
 		} else {
 			// init start
 			var index int64
-			index = int64(math.Pow(entity.DefaultCharsLen, float64(globalConfig.KeySenderDefaultLen-1)))
+			index = int64(math.Pow(domain.DefaultCharsLen, float64(globalConfig.KeySenderDefaultLen-1)))
 			keyGenerater.SetIndex(index)
 			generalStore.UpdateSenderWorker(sender)
 		}
 	}
-	app := &entity.ServiceProvider{
+	app := &domain.ServiceProvider{
 		StoreClient:  generalStore,
 		KeyGenerater: keyGenerater,
 		GlobalConfig: globalConfig,

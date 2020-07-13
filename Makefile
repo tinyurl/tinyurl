@@ -6,6 +6,7 @@ all:
 	go build $(GO_BUILD_FLAGS) -o tinyurl
 
 build:
+	swag init
 	go build $(GO_BUILD_FLAGS) -o tinyurl
 build-image:
 	docker build -t tinyurl/tinyurl .
