@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Sirupsen/logrus"
-	"github.com/tinyurl/tinyurl/entity"
+	"github.com/sirupsen/logrus"
+	"github.com/tinyurl/tinyurl/domain"
 	"github.com/tinyurl/tinyurl/store"
 )
 
@@ -24,8 +24,8 @@ const (
 
 var (
 	ConfigPath  string
-	storeClient entity.URLStore
-	appService  *entity.ServiceProvider
+	storeClient domain.URLStore
+	appService  *domain.ServiceProvider
 )
 
 func init() {
@@ -36,26 +36,26 @@ func init() {
 	}
 
 	storeClient = store.NewGeneralDBClient(ConfigPath)
-	globalConfig := entity.GetGlobalConfig(ConfigPath)
-	appService = &entity.ServiceProvider{
+	globalConfig := domain.GetGlobalConfig(ConfigPath)
+	appService = &domain.ServiceProvider{
 		StoreClient:  storeClient,
-		KeyGenerater: entity.NewKeyGenerater(globalConfig.KeyAlgo),
-		GlobalConfig: entity.GetGlobalConfig(ConfigPath),
+		KeyGenerater: domain.NewKeyGenerater(globalConfig.KeyAlgo),
+		GlobalConfig: domain.GetGlobalConfig(ConfigPath),
 	}
 }
 
-func newTestURL() entity.URL {
-	return entity.URL{
+func newTestURL() domain.URL {
+	return domain.URL{
 		OriginURL: TestOriginURL,
 		ShortPath: TestShortPath,
 	}
 }
 
-func insertTestURL(url entity.URL) {
+func insertTestURL(url domain.URL) {
 	appService.StoreClient.Create(&url)
 }
 
-func updateTestURL(url entity.URL) {
+func updateTestURL(url domain.URL) {
 	appService.StoreClient.Update(&url)
 }
 

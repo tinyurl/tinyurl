@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/tinyurl/tinyurl/entity"
+	"github.com/tinyurl/tinyurl/domain"
 )
 
 var (
@@ -14,13 +14,13 @@ var (
 
 func TestInitDB(t *testing.T) {
 	t.Log("test mysql InitDB...")
-	settingMySQL := entity.GetGlobalConfig(configPathMySQL)
+	settingMySQL := domain.GetGlobalConfig(configPathMySQL)
 	InitDB(settingMySQL)
 	NewGeneralDBClient(configPathMySQL).DropDatabase()
 	t.Logf("test mysql InitDB success.\n")
 
 	t.Log("test sqlite3 InitDB...")
-	settingSqlite3 := entity.GetGlobalConfig(configPathSqlite3)
+	settingSqlite3 := domain.GetGlobalConfig(configPathSqlite3)
 	InitDB(settingSqlite3)
 	NewGeneralDBClient(configPathSqlite3).DropDatabase()
 	t.Logf("test sqlite3 InitDB success.\n")

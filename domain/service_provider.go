@@ -1,4 +1,4 @@
-package entity
+package domain
 
 type URLStore interface {
 	Create(url *URL)
