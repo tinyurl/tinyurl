@@ -38,7 +38,7 @@ func main() {
 		} else {
 			// init start
 			var index int64
-			index = int64(math.Pow(domain.DefaultCharsLen, float64(globalConfig.KeySenderDefaultLen-1)))
+			index = int64(math.Pow(domain.DefaultCharsLen, float64(globalConfig.KeyLen-1)))
 			keyGenerater.SetIndex(index)
 			generalStore.UpdateSenderWorker(sender)
 		}
