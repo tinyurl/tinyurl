@@ -15,6 +15,37 @@
         "version": "1.0"
     },
     "paths": {
+        "/api/v1/shorten": {
+            "post": {
+                "description": "shortening origin url and return short path",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "shortening origin url",
+                "parameters": [
+                    {
+                        "description": "origin url",
+                        "name": "shortpath",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.PostURL"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "short path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/health": {
             "get": {
                 "consumes": [
@@ -28,6 +59,45 @@
                             "type": "string"
                         }
                     }
+                }
+            }
+        },
+        "/n/{shortpath}": {
+            "get": {
+                "description": "get source url by short path",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "parse shorten path and return source url",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "short path",
+                        "name": "shortpath",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "304": {
+                        "description": "haha",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "domain.PostURL": {
+            "type": "object",
+            "properties": {
+                "oritin_url": {
+                    "type": "string"
                 }
             }
         }

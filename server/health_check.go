@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Summary 健康检查
+// @Summary server health check
 // @version 1.0
 // @Accept application/x-json-stream
 // @Success 200 {string} string	"health"

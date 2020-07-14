@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -33,7 +32,6 @@ func BuildEngine(appService *domain.ServiceProvider) *gin.Engine {
 	router.POST("/api/v1/shorten", WrapeService(appService, ShortenURL))
 
 	swaggerURL := ginSwagger.URL(appService.GlobalConfig.SwaggerURL)
-	fmt.Printf("lwq %s \n", appService.GlobalConfig.SwaggerURL)
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, swaggerURL))
 
 	return router

@@ -8,3 +8,7 @@ type URL struct {
 	ShortPath  string
 	CreateTime time.Time
 }
+
+type PostURL struct {
+	OriginURL string `json:"oritin_url"`
+}

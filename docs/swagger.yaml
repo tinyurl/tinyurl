@@ -1,3 +1,9 @@
+definitions:
+  domain.PostURL:
+    properties:
+      oritin_url:
+        type: string
+    type: object
 info:
   contact:
     email: kenan3015@gmail.com
@@ -10,6 +16,26 @@ info:
   title: TinyURL Swagger API Docs
   version: "1.0"
 paths:
+  /api/v1/shorten:
+    post:
+      consumes:
+      - application/json
+      description: shortening origin url and return short path
+      parameters:
+      - description: origin url
+        in: body
+        name: shortpath
+        required: true
+        schema:
+          $ref: '#/definitions/domain.PostURL'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: short path
+          schema:
+            type: string
+      summary: shortening origin url
   /health:
     get:
       consumes:
@@ -20,4 +46,23 @@ paths:
           schema:
             type: string
       summary: 健康检查
+  /n/{shortpath}:
+    get:
+      consumes:
+      - application/json
+      description: get source url by short path
+      parameters:
+      - description: short path
+        in: path
+        name: shortpath
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "304":
+          description: haha
+          schema:
+            type: string
+      summary: parse shorten path and return source url
 swagger: "2.0"

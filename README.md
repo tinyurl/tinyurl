@@ -16,6 +16,7 @@
 - Golang(1.12+)
 - MySQL/Sqlite3
 - make
+- Docker
 
 ## Quick Start
 1. clone project to **GOPATH**
@@ -26,23 +27,7 @@ git clone https://github.com/tinyurl/tinyurl.git $GOPATH/src/github.com/tinyurl/
 ```
 make
 ```
-3. change config in default.properties
-```
-# tinyurl dev config
-#app
-app.host=0.0.0.0
-app.port=8877
-app.domain=0.0.0.0:8877
-
-# db config
-db.type=sqlite3
-db.path=.
-db.host=
-db.port=
-db.name=tinyurldb
-db.user=
-db.password=
-```
+3. change config in `default.properties`
 4. run binary
 ```
 ./tinyurl -config default.properties
